@@ -10,6 +10,7 @@ import (
 func main() {
 	// initialize new gin engine (for server)
 	r := gin.Default()
+	r.LoadHTMLGlob("templates/*.html")
 	// create/configure database instance
 	db := config.CreateDatabase()
 	//firebaseAuth := config.SetupFirebase()

@@ -49,7 +49,10 @@ func FindArtists(c *gin.Context) {
 		artists = append(artists, artist)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"data": artists})
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"Title":   "golang-firebase",
+		"Artists": artists,
+	})
 }
 
 // FindArtistsByDocID : Controller for getting all artists
