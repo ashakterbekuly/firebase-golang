@@ -16,6 +16,12 @@ type Artist struct {
 	CreatedAt time.Time `json:"createdAt"`
 }
 
+type ArtistRegister struct {
+	Email     string `form:"email"`
+	Password  string `form:"password"`
+	CreatedAt time.Time
+}
+
 type Document struct {
 	ID string `json:"id" binding:"required"`
 }

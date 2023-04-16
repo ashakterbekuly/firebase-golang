@@ -1,4 +1,4 @@
-package config
+package database
 
 import (
 	"cloud.google.com/go/firestore"
@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 )
 
-var client *firestore.Client
+var Firestore *firestore.Client
 
 func CreateDatabase() *firestore.Client {
 	conf := &firebase.Config{
@@ -24,10 +24,10 @@ func CreateDatabase() *firestore.Client {
 	if err != nil {
 		log.Fatalf("firebase.NewApp: %v", err)
 	}
-	client, err = app.Firestore(context.Background())
+	Firestore, err = app.Firestore(context.Background())
 	if err != nil {
 		log.Fatalf("app.Firestore: %v", err)
 	}
 
-	return client
+	return Firestore
 }
