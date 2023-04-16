@@ -34,7 +34,7 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
-	err = database.CreateArchitect(architect)
+	err = database.CreateArchitect(models.DaoFromArchitect(architect))
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -73,7 +73,7 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
-	err = database.CreateClient(client)
+	err = database.CreateClient(models.DaoFromClient(client))
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
