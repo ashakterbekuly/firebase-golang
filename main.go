@@ -12,6 +12,7 @@ func main() {
 	// initialize new gin engine (for server)
 	r := gin.Default()
 
+	// load static files
 	r.LoadHTMLGlob("./static/*.html")
 	r.Static("/css", "./static/css")
 	r.Static("/js", "./static/js")
@@ -21,7 +22,7 @@ func main() {
 	db := database.CreateDatabase()
 	auth := config.SetupFirebaseAuth()
 
-	//firebaseAuth := config.SetupFirebaseAuth()
+	//set db and auth instance
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
 		c.Set("firebaseAuth", auth)
