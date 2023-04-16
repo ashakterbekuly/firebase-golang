@@ -52,3 +52,42 @@ func RegisterArchitect(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "index.html", gin.H{})
 }
+
+func RegisterClientGet(c *gin.Context) {
+	c.HTML(http.StatusOK, "register_client.html", gin.H{})
+}
+
+func RegisterClient(c *gin.Context) {
+	firebaseAuth := c.MustGet("firebaseAuth").(*auth.Client)
+	client := models.Client{}
+
+	err := c.ShouldBind(&client)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	if client.Email == "" && client.Password == "" {
+		c.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	err = database.CreateClient(client)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	user := (&auth.UserToCreate{}).Email(client.Email).Password(client.Password)
+
+	_, err = firebaseAuth.CreateUser(context.TODO(), user)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.HTML(http.StatusOK, "index.html", gin.H{})
+}
