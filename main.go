@@ -15,9 +15,7 @@ func main() {
 
 	// load static files
 	r.LoadHTMLGlob("./static/*.html")
-	r.Static("/css", "./static/css")
-	r.Static("/js", "./static/js")
-	r.Static("/img", "./static/img")
+	r.Static("/static", "./static/")
 
 	// create/configure database instance
 	db := database.CreateDatabase()
