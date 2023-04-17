@@ -5,6 +5,8 @@ import (
 	"firebase-golang/api/auth"
 	"firebase-golang/database"
 	"firebase-golang/firebase_auth"
+	"github.com/gin-contrib/sessions"
+	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -16,6 +18,10 @@ func main() {
 
 	// initialize new gin engine (for server)
 	r := gin.Default()
+
+	// Инициализация сессий
+	store := cookie.NewStore([]byte("secret"))
+	r.Use(sessions.Sessions("mysession", store))
 
 	// load static files
 	r.LoadHTMLGlob("./static/*.html")
@@ -54,6 +60,9 @@ func main() {
 
 	//architecture page
 	r.GET("/architecture", api.ArchitecturePage)
+
+	//send mail
+	r.GET("/sendmail", api.SendMail)
 
 	// start the server
 	err := r.Run(":5000")

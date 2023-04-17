@@ -2,6 +2,7 @@ package api
 
 import (
 	"firebase-golang/database"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -9,6 +10,17 @@ import (
 
 func MainPage(c *gin.Context) {
 	isAuthored := GetUserState()
+	session := sessions.Default(c)
+	data := session.Get("email")
+	var email string
+	if data != nil {
+		email = data.(string)
+		if email == "" {
+			isAuthored = false
+		} else {
+			log.Println(email)
+		}
+	}
 
 	events, err := database.GetEventsList()
 	if err != nil {
