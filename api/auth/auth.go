@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func sendAuthRequest(email, password string) error {
+func sendAuthRequest(email, password string) (string, error) {
 	// Authenticate the user with Firebase
 	apiKey := "AIzaSyBcT-aXVJ41Nbgg0x78wphWkJ2GXDvUHuA"
 	signInURL := fmt.Sprintf("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=%s", apiKey)
@@ -22,18 +22,18 @@ func sendAuthRequest(email, password string) error {
 
 	signInJSON, err := json.Marshal(signInBody)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	signInReq, err := http.NewRequest("POST", signInURL, bytes.NewBuffer(signInJSON))
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	signInReq.Header.Set("Content-Type", "application/json")
 	signInRes, err := http.DefaultClient.Do(signInReq)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	defer func(Body io.ReadCloser) {
@@ -47,14 +47,14 @@ func sendAuthRequest(email, password string) error {
 	signInResJSON := make(map[string]interface{})
 	err = json.NewDecoder(signInRes.Body).Decode(&signInResJSON)
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	if signInRes.StatusCode != http.StatusOK {
 		errorMessage := signInResJSON["error"].(map[string]interface{})["message"].(string)
-		return errors.New(errorMessage)
+		return "", errors.New(errorMessage)
 	}
-	//idToken := signInResJSON["idToken"].(string)
+	idToken := signInResJSON["idToken"].(string)
 
-	return nil
+	return idToken, nil
 }

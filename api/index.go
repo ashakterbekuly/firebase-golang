@@ -6,5 +6,9 @@ import (
 )
 
 func MainPage(c *gin.Context) {
-	c.HTML(http.StatusOK, "index.html", gin.H{})
+	isAuthored := GetUserState()
+
+	c.HTML(http.StatusOK, "index.html", gin.H{
+		"IsNotAuthored": !isAuthored,
+	})
 }

@@ -1,6 +1,7 @@
 package auth
 
 import (
+	"firebase-golang/api"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -30,11 +31,14 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	err = sendAuthRequest(login.Email, login.Password)
+	token, err := sendAuthRequest(login.Email, login.Password)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
+	}
+	if token != "" {
+		api.SetUserState(true)
 	}
 
 	// Redirect the user to the dashboard or home page

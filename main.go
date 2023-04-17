@@ -10,12 +10,17 @@ import (
 )
 
 func main() {
+
+	api.InitUserState()
+
 	// initialize new gin engine (for server)
 	r := gin.Default()
 
 	// load static files
 	r.LoadHTMLGlob("./static/*.html")
-	r.Static("/static", "./static/")
+	r.Static("/css", "static/css")
+	r.Static("/img", "static/img")
+	r.Static("/js", "static/js")
 
 	// create/configure database instance
 	db := database.CreateDatabase()
