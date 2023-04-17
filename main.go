@@ -12,6 +12,7 @@ import (
 func main() {
 
 	api.InitUserState()
+	database.InitFirebaseApp()
 
 	// initialize new gin engine (for server)
 	r := gin.Default()
@@ -23,12 +24,14 @@ func main() {
 	r.Static("/js", "static/js")
 
 	// create/configure database instance
-	db := database.CreateDatabase()
+	db := database.InitFirestore()
+	storage := database.InitStorage()
 	firebaseAuth := firebase_auth.SetupFirebaseAuth()
 
 	//set db and auth instance
 	r.Use(func(c *gin.Context) {
 		c.Set("db", db)
+		c.Set("storage", storage)
 		c.Set("firebaseAuth", firebaseAuth)
 	})
 
