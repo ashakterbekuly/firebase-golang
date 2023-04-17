@@ -1,7 +1,6 @@
-package api
+package auth
 
 import (
-	"firebase-golang/config"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -31,7 +30,7 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	err = config.SendAuthRequest(login.Email, login.Password)
+	err = sendAuthRequest(login.Email, login.Password)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})

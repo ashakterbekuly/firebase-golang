@@ -1,40 +1,16 @@
-package config
+package auth
 
 import (
 	"bytes"
-	"context"
 	"encoding/json"
 	"errors"
-	firebase "firebase.google.com/go"
-	"firebase.google.com/go/auth"
 	"fmt"
-	"google.golang.org/api/option"
 	"io"
 	"log"
 	"net/http"
-	"path/filepath"
 )
 
-func SetupFirebaseAuth() *auth.Client {
-	serviceAccountKeyFilePath, err := filepath.Abs("./serviceAccountKey.json")
-	if err != nil {
-		panic("Unable to load serviceAccountKeys.json file")
-	}
-	opt := option.WithCredentialsFile(serviceAccountKeyFilePath)
-	//Firebase admin SDK initialization
-	app, err := firebase.NewApp(context.Background(), nil, opt)
-	if err != nil {
-		panic("Firebase load error")
-	}
-	//Firebase Auth
-	auth, err := app.Auth(context.Background())
-	if err != nil {
-		panic("Firebase load error")
-	}
-	return auth
-}
-
-func SendAuthRequest(email, password string) error {
+func sendAuthRequest(email, password string) error {
 	// Authenticate the user with Firebase
 	apiKey := "AIzaSyBcT-aXVJ41Nbgg0x78wphWkJ2GXDvUHuA"
 	signInURL := fmt.Sprintf("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=%s", apiKey)
