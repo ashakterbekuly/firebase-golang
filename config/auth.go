@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"encoding/json"
+	"errors"
 	firebase "firebase.google.com/go"
 	"firebase.google.com/go/auth"
 	"fmt"
@@ -35,7 +36,7 @@ func SetupFirebaseAuth() *auth.Client {
 
 func SendAuthRequest(email, password string) error {
 	// Authenticate the user with Firebase
-	apiKey := "AIzaSyD8wNdQe6T36LKKzfzq01Zx1rwvk6Jty1c"
+	apiKey := "AIzaSyBcT-aXVJ41Nbgg0x78wphWkJ2GXDvUHuA"
 	signInURL := fmt.Sprintf("https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=%s", apiKey)
 	signInBody := map[string]string{
 		"email":             email,
@@ -75,8 +76,7 @@ func SendAuthRequest(email, password string) error {
 
 	if signInRes.StatusCode != http.StatusOK {
 		errorMessage := signInResJSON["error"].(map[string]interface{})["message"].(string)
-		log.Println(errorMessage)
-		return err
+		return errors.New(errorMessage)
 	}
 	//idToken := signInResJSON["idToken"].(string)
 

@@ -39,12 +39,6 @@ func main() {
 	r.GET("/login", api.LoginGet)
 	r.POST("/login", api.Login)
 
-	// routes definition for finding and creating artists
-	r.GET("/artist", api.FindArtistsByDocID)
-	r.GET("/artists", api.FindArtists)
-	r.GET("/documents", api.GetDocIDs)
-	r.POST("/artist", api.CreateArtist)
-
 	// start the server
 	err := r.Run(":5000")
 	if err != nil {
