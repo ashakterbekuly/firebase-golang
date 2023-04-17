@@ -2,6 +2,7 @@ package auth
 
 import (
 	"context"
+	"firebase-golang/api"
 	"firebase-golang/database"
 	"firebase-golang/models"
 	"firebase.google.com/go/auth"
@@ -50,6 +51,8 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
+	api.SetUserState(true)
+
 	c.Redirect(http.StatusFound, "/")
 }
 
@@ -88,6 +91,8 @@ func RegisterClient(c *gin.Context) {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
+
+	api.SetUserState(true)
 
 	c.Redirect(http.StatusFound, "/")
 }

@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 )
 
+var app *firebase.App
+
 func SetupFirebaseAuth() *auth.Client {
 	serviceAccountKeyFilePath, err := filepath.Abs("./serviceAccountKey.json")
 	if err != nil {
@@ -15,7 +17,7 @@ func SetupFirebaseAuth() *auth.Client {
 	}
 	opt := option.WithCredentialsFile(serviceAccountKeyFilePath)
 	//Firebase admin SDK initialization
-	app, err := firebase.NewApp(context.Background(), nil, opt)
+	app, err = firebase.NewApp(context.Background(), nil, opt)
 	if err != nil {
 		panic("Firebase load error")
 	}
