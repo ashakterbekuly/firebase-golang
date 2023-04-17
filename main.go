@@ -1,6 +1,7 @@
 package main
 
 import (
+	"firebase-golang/api"
 	"firebase-golang/api/auth"
 	"firebase-golang/database"
 	"firebase-golang/firebase_auth"
@@ -38,6 +39,9 @@ func main() {
 	//login routes
 	r.GET("/login", auth.LoginGet)
 	r.POST("/login", auth.Login)
+
+	//main page
+	r.GET("/", api.MainPage)
 
 	// start the server
 	err := r.Run(":5000")

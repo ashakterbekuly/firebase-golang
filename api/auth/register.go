@@ -50,7 +50,7 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "index.html", gin.H{})
+	c.Redirect(http.StatusFound, "/")
 }
 
 func RegisterClientGet(c *gin.Context) {
@@ -89,5 +89,5 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "index.html", gin.H{})
+	c.Redirect(http.StatusFound, "/")
 }

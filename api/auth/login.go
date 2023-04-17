@@ -38,6 +38,5 @@ func Login(c *gin.Context) {
 	}
 
 	// Redirect the user to the dashboard or home page
-	//c.Redirect(http.StatusFound, "/artists")
-	c.HTML(http.StatusOK, "index.html", gin.H{})
+	c.Redirect(http.StatusFound, "/")
 }
