@@ -1,4 +1,4 @@
-package config
+package firebase_auth
 
 import (
 	"context"
@@ -20,9 +20,9 @@ func SetupFirebaseAuth() *auth.Client {
 		panic("Firebase load error")
 	}
 	//Firebase Auth
-	auth, err := app.Auth(context.Background())
+	client, err := app.Auth(context.Background())
 	if err != nil {
 		panic("Firebase load error")
 	}
-	return auth
+	return client
 }

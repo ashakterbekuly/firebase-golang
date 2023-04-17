@@ -2,8 +2,8 @@ package main
 
 import (
 	"firebase-golang/api/auth"
-	"firebase-golang/config"
 	"firebase-golang/database"
+	"firebase-golang/firebase_auth"
 	"github.com/gin-gonic/gin"
 	"log"
 )
@@ -20,7 +20,7 @@ func main() {
 
 	// create/configure database instance
 	db := database.CreateDatabase()
-	firebaseAuth := config.SetupFirebaseAuth()
+	firebaseAuth := firebase_auth.SetupFirebaseAuth()
 
 	//set db and auth instance
 	r.Use(func(c *gin.Context) {
