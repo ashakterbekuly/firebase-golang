@@ -52,6 +52,9 @@ func main() {
 	//events page
 	r.GET("/events", api.EventsPage)
 
+	//architecture page
+	r.GET("/architecture", api.ArchitecturePage)
+
 	// start the server
 	err := r.Run(":5000")
 	if err != nil {
