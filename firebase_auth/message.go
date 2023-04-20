@@ -1,37 +1,88 @@
 package firebase_auth
 
 import (
-	"context"
+	"bytes"
+	"encoding/json"
 	"firebase.google.com/go/auth"
-	"firebase.google.com/go/messaging"
+	"fmt"
+	"io"
 	"log"
+	"net/http"
 )
 
-func SendMessage(authClient *auth.Client, email, event string) {
-	user, err := authClient.GetUserByEmail(context.Background(), email)
-	if err != nil {
-		log.Fatalf("error getting user: %v\n", err)
-	}
-	email = user.Email
+type Recipient struct {
+	Email string `json:"email"`
+}
 
-	msg := &messaging.Message{
-		Notification: &messaging.Notification{
-			Title: "Registration to the event",
-			Body:  "You have invitation to the event named: " + event,
+type Message struct {
+	Text    string      `json:"text"`
+	Subject string      `json:"subject"`
+	From    string      `json:"from_email"`
+	To      []Recipient `json:"to"`
+}
+
+type APIResponse struct {
+	Status string `json:"status"`
+	Id     string `json:"id"`
+	Error  string `json:"error"`
+}
+
+func SendMessage(authClient *auth.Client, email, event, token string) {
+	// Настройки сообщения
+	message := Message{
+		Text:    "This is a test email",
+		Subject: "Test Email",
+		From:    "sender@example.com",
+		To: []Recipient{
+			{Email: email},
 		},
-		Token: email,
 	}
 
-	messagingClient, err := app.Messaging(context.Background())
+	// Кодируем сообщение в формат JSON
+	messageJson, err := json.Marshal(message)
 	if err != nil {
-		log.Fatalf("error getting Messaging client: %v\n", err)
+		log.Printf("Error marshaling message: %v\n", err)
+		return
 	}
 
-	response, err := messagingClient.Send(context.Background(), msg)
+	// Создаем запрос к API Mailchimp
+	url := fmt.Sprintf("https://%s.api.mailchimp.com/3.0/lists/%s/messages", "ba44a9569197bb47f98b0a48135e49f7-us10", "")
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(messageJson))
 	if err != nil {
-		log.Fatalf("error sending message: %v\n", err)
+		log.Printf("Error creating request: %v\n", err)
+		return
 	}
 
-	log.Printf("message sent: %v\n", response)
+	// Устанавливаем заголовки
+	req.Header.Set("Content-Type", "application/json")
 
+	// Отправляем запрос и получаем ответ
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Printf("Error sending request: %v\n", err)
+		return
+	}
+	defer func(Body io.ReadCloser) {
+		err = Body.Close()
+		if err != nil {
+			log.Printf("Error closing body: %v\n", err)
+		}
+	}(resp.Body)
+
+	// Декодируем ответ в формат JSON
+	var apiResponse APIResponse
+	err = json.NewDecoder(resp.Body).Decode(&apiResponse)
+	if err != nil {
+		log.Printf("Error decoding response: %v\n", err)
+		return
+	}
+
+	// Проверяем статус ответа
+	if apiResponse.Status == "error" {
+		log.Printf("Error sending email: %s\n", apiResponse.Error)
+		return
+	}
+
+	log.Printf("Email sent with ID %s\n", apiResponse.Id)
 }

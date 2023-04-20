@@ -6,6 +6,7 @@ import (
 	"firebase-golang/database"
 	"firebase-golang/models"
 	"firebase.google.com/go/auth"
+	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -44,7 +45,7 @@ func RegisterArchitect(c *gin.Context) {
 
 	user := (&auth.UserToCreate{}).Email(architect.Email).Password(architect.Password)
 
-	_, err = firebaseAuth.CreateUser(context.TODO(), user)
+	dbUser, err := firebaseAuth.CreateUser(context.TODO(), user)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -52,6 +53,15 @@ func RegisterArchitect(c *gin.Context) {
 	}
 
 	api.SetUserState(true)
+	session := sessions.Default(c)
+	session.Set("token", "")
+	session.Set("email", dbUser.Email)
+	err = session.Save()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.Redirect(http.StatusFound, "/")
 }

@@ -64,6 +64,9 @@ func main() {
 	//send mail
 	r.GET("/sendmail", api.SendMail)
 
+	//sign out
+	r.GET("/logout", auth.LogoutGet)
+
 	// start the server
 	err := r.Run(":5000")
 	if err != nil {

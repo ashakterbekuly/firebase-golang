@@ -25,7 +25,7 @@ func EventsPage(c *gin.Context) {
 
 func SendMail(c *gin.Context) {
 	firebaseAuth := c.MustGet("firebaseAuth").(*auth.Client)
-	code := c.Params.ByName("param1")
+	code := c.Query("code")
 
 	session := sessions.Default(c)
 	data := session.Get("email")
@@ -37,6 +37,12 @@ func SendMail(c *gin.Context) {
 		}
 	}
 
+	tokenRaw := session.Get("token")
+	var token string
+	if data != nil {
+		token = tokenRaw.(string)
+	}
+
 	events, err := database.GetEventsList()
 	if err != nil {
 		log.Println(err)
@@ -46,7 +52,7 @@ func SendMail(c *gin.Context) {
 
 	for _, event := range events {
 		if event.Code == code {
-			firebase_auth.SendMessage(firebaseAuth, email, event.Title)
+			firebase_auth.SendMessage(firebaseAuth, email, event.Title, token)
 		}
 	}
 
