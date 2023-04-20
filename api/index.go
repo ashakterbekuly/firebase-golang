@@ -32,5 +32,6 @@ func MainPage(c *gin.Context) {
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"IsNonAuthenticated": !isAuthored,
 		"Events":             events,
+		"Username":           database.GetUsername(email),
 	})
 }
