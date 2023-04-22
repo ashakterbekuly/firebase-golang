@@ -11,6 +11,19 @@ import (
 )
 
 func EventsPage(c *gin.Context) {
+	isAuthored := GetUserState()
+	session := sessions.Default(c)
+	data := session.Get("email")
+	var email string
+	if data != nil {
+		email = data.(string)
+		if email == "" {
+			isAuthored = false
+		} else {
+			log.Println(email)
+		}
+	}
+
 	events, err := database.GetEventsList()
 	if err != nil {
 		log.Println(err)
@@ -19,7 +32,9 @@ func EventsPage(c *gin.Context) {
 	}
 
 	c.HTML(http.StatusOK, "events.html", gin.H{
-		"Events": events,
+		"IsNonAuthenticated": !isAuthored,
+		"Events":             events,
+		"Username":           database.GetUsername(email),
 	})
 }
 
