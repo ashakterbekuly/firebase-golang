@@ -71,7 +71,7 @@ func main() {
 	r.GET("/projects", api.ProjectsGet)
 
 	// start the server
-	err := r.Run(":5000")
+	err := r.Run(":5001")
 	if err != nil {
 		log.Fatal(err)
 		return
