@@ -9,6 +9,15 @@ type Architect struct {
 	Phone         string `form:"phone"`
 	Email         string `form:"email"`
 	Password      string `form:"password"`
+	Bio           string
+}
+
+func (a Architect) GetBio() string {
+	if a.Bio == "" {
+		a.Bio = "Short description about yourself, what you do and so on."
+	}
+
+	return a.Bio
 }
 
 type ArchitectDao struct {
@@ -17,6 +26,7 @@ type ArchitectDao struct {
 	Portfolio     string    `json:"portfolio"`
 	Phone         string    `json:"phone"`
 	Email         string    `json:"email"`
+	Bio           string    `json:"bio"`
 	CreatedAt     time.Time `json:"createdAt"`
 }
 
@@ -27,6 +37,7 @@ func DaoFromArchitect(a Architect) ArchitectDao {
 		Portfolio:     a.Portfolio,
 		Phone:         a.Phone,
 		Email:         a.Email,
+		Bio:           a.GetBio(),
 		CreatedAt:     time.Now(),
 	}
 }

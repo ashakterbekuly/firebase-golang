@@ -70,6 +70,9 @@ func main() {
 	//projects
 	r.GET("/projects", api.ProjectsGet)
 
+	//profile
+	r.GET("/profile", api.Profile)
+
 	// start the server
 	err := r.Run(":5001")
 	if err != nil {

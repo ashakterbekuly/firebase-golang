@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-func ArchitecturePage(c *gin.Context) {
+func Profile(c *gin.Context) {
 	isAuthored := GetUserState()
 	session := sessions.Default(c)
 	data := session.Get("email")
@@ -22,7 +22,7 @@ func ArchitecturePage(c *gin.Context) {
 		}
 	}
 
-	c.HTML(http.StatusOK, "architecture.html", gin.H{
+	c.HTML(http.StatusOK, "profile.html", gin.H{
 		"IsNonAuthenticated": !isAuthored,
 		"Username":           database.GetUsername(email),
 	})
