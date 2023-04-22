@@ -67,6 +67,9 @@ func main() {
 	//sign out
 	r.GET("/logout", auth.LogoutGet)
 
+	//projects
+	r.GET("/projects", api.ProjectsGet)
+
 	// start the server
 	err := r.Run(":5000")
 	if err != nil {
