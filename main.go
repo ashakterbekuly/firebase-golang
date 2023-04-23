@@ -73,6 +73,9 @@ func main() {
 	//profile
 	r.GET("/profile", api.Profile)
 
+	//edit profile
+	r.POST("/edit-profile", auth.EditProfile)
+
 	// start the server
 	err := r.Run(":5001")
 	if err != nil {

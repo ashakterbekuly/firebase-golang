@@ -58,3 +58,41 @@ func sendAuthRequest(email, password string) (string, error) {
 
 	return idToken, nil
 }
+
+func sendUpdateUserRequest(token, newEmail, newPassword string) error {
+	// Формируем запрос на изменение учетной записи пользователя
+	body := map[string]interface{}{
+		"idToken":           token,
+		"email":             newEmail,
+		"password":          newPassword,
+		"returnSecureToken": true,
+	}
+
+	jsonBody, err := json.Marshal(body)
+	if err != nil {
+		return err
+	}
+
+	apiKey := "AIzaSyBcT-aXVJ41Nbgg0x78wphWkJ2GXDvUHuA"
+
+	// отправляем запрос на изменение учетной записи пользователя
+	resp, err := http.Post(fmt.Sprintf("https://identitytoolkit.googleapis.com/v1/accounts:update?key=%s", apiKey), "application/json", bytes.NewBuffer(jsonBody))
+	if err != nil {
+		return err
+	}
+
+	// Обрабатываем ответ сервера
+	if resp.StatusCode != http.StatusOK {
+		var errorResponse struct {
+			Error struct {
+				Message string
+			}
+		}
+		if err = json.NewDecoder(resp.Body).Decode(&errorResponse); err != nil {
+			return err
+		}
+		return err
+	}
+
+	return nil
+}

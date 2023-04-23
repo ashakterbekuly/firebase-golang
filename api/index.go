@@ -59,6 +59,7 @@ func MainPage(c *gin.Context) {
 		"IsNonAuthenticated": !isAuthored,
 		"Events":             showEvents,
 		"Projects":           showProjects,
+		"ID":                 database.GetID(email),
 		"Username":           database.GetUsername(email),
 	})
 }

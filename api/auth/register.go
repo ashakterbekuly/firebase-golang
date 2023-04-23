@@ -81,6 +81,17 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
+	form, _ := c.MultipartForm()
+	files := form.File["photo"]
+	for _, file := range files {
+		client.PhotoUrl, err = database.CreateClientPhoto(file)
+		if err != nil {
+			log.Println(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
 	if client.Email == "" && client.Password == "" {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
@@ -103,6 +114,14 @@ func RegisterClient(c *gin.Context) {
 	}
 
 	api.SetUserState(true)
+	session := sessions.Default(c)
+	session.Set("email", client.Email)
+	err = session.Save()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
 
 	c.Redirect(http.StatusFound, "/")
 }

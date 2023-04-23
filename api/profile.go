@@ -12,6 +12,8 @@ func Profile(c *gin.Context) {
 	isAuthored := GetUserState()
 	session := sessions.Default(c)
 	data := session.Get("email")
+	id := c.Query("id")
+
 	var email string
 	if data != nil {
 		email = data.(string)
@@ -22,8 +24,18 @@ func Profile(c *gin.Context) {
 		}
 	}
 
+	client, err := database.GetClientByID(id)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	c.HTML(http.StatusOK, "profile.html", gin.H{
 		"IsNonAuthenticated": !isAuthored,
+		"Name":               client.Name,
+		"Bio":                client.Bio,
+		"PhotoUrl":           client.PhotoUrl,
 		"Username":           database.GetUsername(email),
 	})
 }
