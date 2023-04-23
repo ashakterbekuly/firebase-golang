@@ -28,7 +28,7 @@ func SetRoleByEmail(email, role string) error {
 func UpdateRoleByEmail(oldEmail, newEmail, role string) error {
 	_, err := Firestore.
 		Collection("roles").
-		Doc(GetDocumentIDByEmail(oldEmail)).
+		Doc(GetRoleDocumentIDByEmail(oldEmail)).
 		Set(context.TODO(), map[string]interface{}{
 			"Email": newEmail,
 			"Role":  role,
@@ -38,6 +38,26 @@ func UpdateRoleByEmail(oldEmail, newEmail, role string) error {
 	}
 
 	return nil
+}
+
+func GetRoleDocumentIDByEmail(email string) string {
+	var docID string
+
+	ref := Firestore.Collection("roles")
+
+	docs, err := ref.Documents(context.TODO()).GetAll()
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+
+	for _, doc := range docs {
+		if email == doc.Data()["Email"].(string) {
+			docID = doc.Ref.ID
+		}
+	}
+
+	return docID
 }
 
 func GetRoleByEmail(email string) string {

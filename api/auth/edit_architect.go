@@ -67,12 +67,12 @@ func EditArchitectProfile(c *gin.Context) {
 
 	// Обновляем его в базе
 	err = database.UpdateArchitect(currentEmail, models.Architect{
-		Email:         newEmail,
-		Name:          newName,
-		Bio:           newBio,
-		PhotoUrl:      newPhotoUrl,
-		Specification: newSpecialization,
-		Portfolio:     newPortfolio,
+		Email:          newEmail,
+		Name:           newName,
+		Bio:            newBio,
+		PhotoUrl:       newPhotoUrl,
+		Specialization: newSpecialization,
+		Portfolio:      newPortfolio,
 	})
 
 	err = database.UpdateRoleByEmail(currentEmail, newEmail, "architect")

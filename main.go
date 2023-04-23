@@ -80,7 +80,7 @@ func main() {
 	r.POST("/edit-architect", auth.EditArchitectProfile)
 
 	// start the server
-	err := r.Run(":5001")
+	err := r.Run(":5002")
 	if err != nil {
 		log.Fatal(err)
 		return

@@ -3,14 +3,14 @@ package models
 import "time"
 
 type Architect struct {
-	Name          string `form:"name"`
-	Specification string `form:"spec"`
-	Portfolio     string `form:"portfolio"`
-	Phone         string `form:"phone"`
-	Email         string `form:"email"`
-	Password      string `form:"password"`
-	Bio           string
-	PhotoUrl      string
+	Name           string `form:"name"`
+	Specialization string `form:"spec"`
+	Portfolio      string `form:"portfolio"`
+	Phone          string `form:"phone"`
+	Email          string `form:"email"`
+	Password       string `form:"password"`
+	Bio            string
+	PhotoUrl       string
 }
 
 func (a Architect) GetBio() string {
@@ -22,25 +22,25 @@ func (a Architect) GetBio() string {
 }
 
 type ArchitectDao struct {
-	Name          string    `json:"name"`
-	Specification string    `json:"spec"`
-	Portfolio     string    `json:"portfolio"`
-	Phone         string    `json:"phone"`
-	Email         string    `json:"email"`
-	Bio           string    `json:"bio"`
-	PhotoUrl      string    `json:"photoUrl"`
-	CreatedAt     time.Time `json:"createdAt"`
+	Name           string    `json:"name"`
+	Specialization string    `json:"spec"`
+	Portfolio      string    `json:"portfolio"`
+	Phone          string    `json:"phone"`
+	Email          string    `json:"email"`
+	Bio            string    `json:"bio"`
+	PhotoUrl       string    `json:"photoUrl"`
+	CreatedAt      time.Time `json:"createdAt"`
 }
 
 func DaoFromArchitect(a Architect) ArchitectDao {
 	return ArchitectDao{
-		Name:          a.Name,
-		Specification: a.Specification,
-		Portfolio:     a.Portfolio,
-		Phone:         a.Phone,
-		Email:         a.Email,
-		PhotoUrl:      a.PhotoUrl,
-		Bio:           a.GetBio(),
-		CreatedAt:     time.Now(),
+		Name:           a.Name,
+		Specialization: a.Specialization,
+		Portfolio:      a.Portfolio,
+		Phone:          a.Phone,
+		Email:          a.Email,
+		PhotoUrl:       a.PhotoUrl,
+		Bio:            a.GetBio(),
+		CreatedAt:      time.Now(),
 	}
 }

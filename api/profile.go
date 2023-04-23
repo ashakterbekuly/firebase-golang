@@ -50,7 +50,7 @@ func Profile(c *gin.Context) {
 			"Name":               architect.Name,
 			"Bio":                architect.Bio,
 			"PhotoUrl":           architect.PhotoUrl,
-			"Specialization":     architect.Specification,
+			"Specialization":     architect.Specialization,
 			"Portfolio":          architect.Portfolio,
 			"Username":           database.GetArchitectUsername(email),
 		})

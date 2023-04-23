@@ -29,7 +29,7 @@ func UpdateArchitect(oldEmail string, architect models.Architect) error {
 			"Name":           architect.Name,
 			"PhotoUrl":       architect.PhotoUrl,
 			"Portfolio":      architect.Portfolio,
-			"Specialization": architect.Specification,
+			"Specialization": architect.Specialization,
 		}, firestore.MergeAll)
 	if err != nil {
 		return err
