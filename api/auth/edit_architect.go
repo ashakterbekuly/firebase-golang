@@ -11,7 +11,7 @@ import (
 	"net/http"
 )
 
-func EditProfile(c *gin.Context) {
+func EditArchitectProfile(c *gin.Context) {
 	session := sessions.Default(c)
 	currentEmail := session.Get("email").(string)
 
@@ -31,21 +31,23 @@ func EditProfile(c *gin.Context) {
 	}
 	newName := c.PostForm("name")
 	newBio := c.PostForm("bio")
+	newSpecialization := c.PostForm("specialization")
+	newPortfolio := c.PostForm("portfolio")
 
 	form, _ := c.MultipartForm()
 	files := form.File["photo"]
 	var newPhotoUrl string
 	if len(files) == 0 {
-		newPhotoUrl = database.GetPhotoUrl(currentEmail)
+		newPhotoUrl = database.GetArchitectPhotoUrl(currentEmail)
 	} else {
-		err := database.DeleteClientImage(database.GetPhotoUrl(currentEmail))
+		err := database.DeleteArchitectImage(database.GetArchitectPhotoUrl(currentEmail))
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Ошибка удаления фото"})
 			return
 		}
 		for _, file := range files {
-			newPhotoUrl, _ = database.CreateClientPhoto(file)
+			newPhotoUrl, _ = database.CreateArchitectPhoto(file)
 		}
 	}
 
@@ -64,14 +66,16 @@ func EditProfile(c *gin.Context) {
 	}
 
 	// Обновляем его в базе
-	err = database.UpdateClient(currentEmail, models.Client{
-		Email:    newEmail,
-		Name:     newName,
-		Bio:      newBio,
-		PhotoUrl: newPhotoUrl,
+	err = database.UpdateArchitect(currentEmail, models.Architect{
+		Email:         newEmail,
+		Name:          newName,
+		Bio:           newBio,
+		PhotoUrl:      newPhotoUrl,
+		Specification: newSpecialization,
+		Portfolio:     newPortfolio,
 	})
 
-	err = database.UpdateRoleByEmail(currentEmail, newEmail, "client")
+	err = database.UpdateRoleByEmail(currentEmail, newEmail, "architect")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
@@ -88,5 +92,5 @@ func EditProfile(c *gin.Context) {
 	}
 
 	// Возвращаем сообщение об успешном обновлении учетной записи
-	c.Redirect(http.StatusFound, fmt.Sprintf("/profile?id=%s", database.GetID(newEmail)))
+	c.Redirect(http.StatusFound, fmt.Sprintf("/profile?id=%s", database.GetArchitectDocumentIDByEmail(newEmail)))
 }

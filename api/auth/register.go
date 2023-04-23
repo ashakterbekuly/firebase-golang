@@ -31,6 +31,17 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
+	form, _ := c.MultipartForm()
+	files := form.File["photo"]
+	for _, file := range files {
+		architect.PhotoUrl, err = database.CreateArchitectPhoto(file)
+		if err != nil {
+			log.Println(err)
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+	}
+
 	if architect.Email == "" && architect.Password == "" {
 		c.AbortWithStatus(http.StatusBadRequest)
 		return
@@ -52,10 +63,17 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
+	err = database.SetRoleByEmail(dbUser.Email, "architect")
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	api.SetUserState(true)
 	session := sessions.Default(c)
-	session.Set("token", "")
 	session.Set("email", dbUser.Email)
+	session.Set("role", "architect")
 	err = session.Save()
 	if err != nil {
 		log.Println(err)
@@ -113,9 +131,17 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
+	err = database.SetRoleByEmail(client.Email, "client")
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
 	api.SetUserState(true)
 	session := sessions.Default(c)
 	session.Set("email", client.Email)
+	session.Set("role", "client")
 	err = session.Save()
 	if err != nil {
 		log.Println(err)

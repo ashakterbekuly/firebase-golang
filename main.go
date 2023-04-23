@@ -76,8 +76,11 @@ func main() {
 	//edit profile
 	r.POST("/edit-profile", auth.EditProfile)
 
+	//edit architect profile
+	r.POST("/edit-architect", auth.EditArchitectProfile)
+
 	// start the server
-	err := r.Run(":5001")
+	err := r.Run(":5000")
 	if err != nil {
 		log.Fatal(err)
 		return

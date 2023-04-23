@@ -4,26 +4,36 @@ import (
 	"firebase-golang/database"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"log"
 	"net/http"
 )
 
 func ArchitecturePage(c *gin.Context) {
 	isAuthored := GetUserState()
 	session := sessions.Default(c)
-	data := session.Get("email")
 	var email string
-	if data != nil {
-		email = data.(string)
-		if email == "" {
-			isAuthored = false
-		} else {
-			log.Println(email)
-		}
+	rawEmail := session.Get("email")
+	if rawEmail != nil {
+		email = rawEmail.(string)
+	}
+	var role string
+	rawRole := session.Get("role")
+	if rawRole != nil {
+		role = rawRole.(string)
+	}
+
+	var id string
+	var username string
+	if role == "client" {
+		id = database.GetID(email)
+		username = database.GetUsername(email)
+	} else {
+		id = database.GetArchitectDocumentIDByEmail(email)
+		username = database.GetArchitectUsername(email)
 	}
 
 	c.HTML(http.StatusOK, "architecture.html", gin.H{
 		"IsNonAuthenticated": !isAuthored,
-		"Username":           database.GetUsername(email),
+		"ID":                 id,
+		"Username":           username,
 	})
 }

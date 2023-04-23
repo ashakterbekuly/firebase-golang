@@ -2,6 +2,7 @@ package auth
 
 import (
 	"firebase-golang/api"
+	"firebase-golang/database"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
@@ -44,6 +45,7 @@ func Login(c *gin.Context) {
 		session := sessions.Default(c)
 		session.Set("token", token)
 		session.Set("email", login.Email)
+		session.Set("role", database.GetRoleByEmail(login.Email))
 		err = session.Save()
 		if err != nil {
 			log.Println(err)
