@@ -23,5 +23,16 @@ func GetEventsList() ([]models.Event, error) {
 		events = append(events, event)
 	}
 
-	return events, nil
+	return formatDateTimeForEvents(events), nil
+}
+
+func formatDateTimeForEvents(events []models.Event) []models.Event {
+	for i := range events {
+		events[i].DateFromString = events[i].DateFrom.Format("2006-01-02")
+		events[i].DateToString = events[i].DateTo.Format("2006-01-02")
+		events[i].DateTimeFromString = events[i].DateFrom.Format("2006-01-02 15:04:05")
+		events[i].DateTimeToString = events[i].DateTo.Format("2006-01-02 15:04:05")
+	}
+
+	return events
 }

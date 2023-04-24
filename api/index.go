@@ -30,16 +30,14 @@ func MainPage(c *gin.Context) {
 		return
 	}
 
-	var showEvents []models.Event
-	if len(events) > 4 {
-		for i := 0; i < 4; i++ {
-			showEvents = append(showEvents, events[i])
-		}
-	} else {
-		showEvents = events
+	projects, err := database.GetProjectsList()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
-	projects, err := database.GetProjectsList()
+	templates, err := database.GetTemplatesList()
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -67,9 +65,31 @@ func MainPage(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "index.html", gin.H{
 		"IsNonAuthenticated": !isAuthored,
-		"Events":             showEvents,
+		"Events":             sortEventsByDateFrom(events),
 		"Projects":           showProjects,
+		"Templates":          database.SortTemplates(templates),
 		"ID":                 id,
 		"Username":           username,
 	})
+}
+
+func sortEventsByDateFrom(events []models.Event) []models.Event {
+	var threeEvents []models.Event
+
+	for i := 0; i < len(events); i++ {
+		for j := 0; j < len(events)-1; j++ {
+			if events[j].DateFrom.After(events[j+1].DateFrom) {
+				events[j], events[j+1] = events[j+1], events[j]
+			}
+		}
+	}
+
+	if len(events) > 3 {
+		for i := 0; i < 3; i++ {
+			threeEvents = append(threeEvents, events[i])
+		}
+		return threeEvents
+	}
+
+	return threeEvents
 }

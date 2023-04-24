@@ -79,6 +79,9 @@ func main() {
 	//edit architect profile
 	r.POST("/edit-architect", auth.EditArchitectProfile)
 
+	//templates
+	r.GET("/template", api.Template)
+
 	// start the server
 	err := r.Run(":5002")
 	if err != nil {
