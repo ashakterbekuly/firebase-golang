@@ -9,6 +9,7 @@ import (
 	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"log"
+	"os"
 )
 
 func main() {
@@ -82,8 +83,13 @@ func main() {
 	//templates
 	r.GET("/template", api.Template)
 
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "5002"
+	}
+
 	// start the server
-	err := r.Run(":5002")
+	err := r.Run(":" + port)
 	if err != nil {
 		log.Fatal(err)
 		return
