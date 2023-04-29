@@ -14,5 +14,5 @@ type Event struct {
 	DateTimeFromString string
 	DateTimeToString   string
 	Venue              string
-	Subjects           []string
+	Subjects           string
 }
