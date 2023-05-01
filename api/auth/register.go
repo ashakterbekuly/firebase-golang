@@ -4,9 +4,11 @@ import (
 	"context"
 	"firebase-golang/api"
 	"firebase-golang/database"
+	"firebase-golang/database/architects"
+	"firebase-golang/database/clients"
+	"firebase-golang/database/roles"
 	"firebase-golang/models"
 	"firebase.google.com/go/auth"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -47,13 +49,7 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
-	err = database.CreateArchitect(models.DaoFromArchitect(architect))
-	if err != nil {
-		log.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
+	uid := architects.CreateArchitect(models.DaoFromArchitect(architect))
 	user := (&auth.UserToCreate{}).Email(architect.Email).Password(architect.Password)
 
 	dbUser, err := firebaseAuth.CreateUser(context.TODO(), user)
@@ -63,7 +59,7 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
-	err = database.SetRoleByEmail(dbUser.Email, "architect")
+	err = roles.SetRoleByEmail(dbUser.Email, "architects", uid)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -71,17 +67,8 @@ func RegisterArchitect(c *gin.Context) {
 	}
 
 	api.SetUserState(true)
-	session := sessions.Default(c)
-	session.Set("email", dbUser.Email)
-	session.Set("role", "architect")
-	err = session.Save()
-	if err != nil {
-		log.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
 
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/uid="+uid)
 }
 
 func RegisterClientGet(c *gin.Context) {
@@ -115,13 +102,7 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
-	err = database.CreateClient(models.DaoFromClient(client))
-	if err != nil {
-		log.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
-
+	uid := clients.CreateClient(models.DaoFromClient(client))
 	user := (&auth.UserToCreate{}).Email(client.Email).Password(client.Password)
 
 	_, err = firebaseAuth.CreateUser(context.TODO(), user)
@@ -131,7 +112,7 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
-	err = database.SetRoleByEmail(client.Email, "client")
+	err = roles.SetRoleByEmail(client.Email, "clients", uid)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -139,15 +120,6 @@ func RegisterClient(c *gin.Context) {
 	}
 
 	api.SetUserState(true)
-	session := sessions.Default(c)
-	session.Set("email", client.Email)
-	session.Set("role", "client")
-	err = session.Save()
-	if err != nil {
-		log.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
 
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/?uid="+uid)
 }

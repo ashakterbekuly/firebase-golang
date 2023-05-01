@@ -1,13 +1,14 @@
-package database
+package events
 
 import (
 	"context"
+	"firebase-golang/database"
 	"firebase-golang/models"
 )
 
 func GetEventsList() ([]models.Event, error) {
 	var events []models.Event
-	coll := Firestore.Collection("events")
+	coll := database.Firestore.Collection("events")
 
 	documents, err := coll.Documents(context.TODO()).GetAll()
 	if err != nil {

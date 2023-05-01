@@ -1,28 +1,29 @@
-package database
+package architects
 
 import (
 	"cloud.google.com/go/firestore"
 	"context"
+	"firebase-golang/database"
 	"firebase-golang/models"
 	"log"
 )
 
-func CreateArchitect(arch models.ArchitectDao) error {
-	ref := Firestore.Collection("architects")
+func CreateArchitect(arch models.ArchitectDao) string {
+	ref := database.Firestore.Collection("architects")
 
-	_, _, err := ref.Add(context.TODO(), &arch)
+	doc, _, err := ref.Add(context.TODO(), &arch)
 	if err != nil {
 		log.Println(err)
-		return err
+		return ""
 	}
 
-	return nil
+	return doc.ID
 }
 
-func UpdateArchitect(oldEmail string, architect models.Architect) error {
-	_, err := Firestore.
+func UpdateArchitect(uid string, architect models.Architect) error {
+	_, err := database.Firestore.
 		Collection("architects").
-		Doc(GetArchitectDocumentIDByEmail(oldEmail)).
+		Doc(uid).
 		Set(context.TODO(), map[string]interface{}{
 			"Email":          architect.Email,
 			"Bio":            architect.Bio,
@@ -38,8 +39,20 @@ func UpdateArchitect(oldEmail string, architect models.Architect) error {
 	return nil
 }
 
+func GetUsernameByUID(uid string) string {
+	doc, err := database.Firestore.
+		Collection("architects").
+		Doc(uid).Get(context.TODO())
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+
+	return doc.Data()["Name"].(string)
+}
+
 func GetArchitectByEmail(email string) (models.Architect, error) {
-	ref := Firestore.Collection("architects")
+	ref := database.Firestore.Collection("architects")
 	doc := ref.Doc(GetArchitectDocumentIDByEmail(email))
 
 	snapshot, err := doc.Get(context.TODO())
@@ -80,7 +93,7 @@ func GetArchitectPhotoUrl(email string) string {
 func GetArchitectDocumentIDByEmail(email string) string {
 	var id string
 
-	ref := Firestore.Collection("architects")
+	ref := database.Firestore.Collection("architects")
 
 	docs, err := ref.Documents(context.TODO()).GetAll()
 	if err != nil {
@@ -106,7 +119,7 @@ func GetArchitectDocumentIDByEmail(email string) string {
 func GetArchitectByID(id string) (models.Architect, error) {
 	var architect models.Architect
 
-	ref := Firestore.Collection("architects")
+	ref := database.Firestore.Collection("architects")
 
 	docs, err := ref.Documents(context.TODO()).GetAll()
 	if err != nil {

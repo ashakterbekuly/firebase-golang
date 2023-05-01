@@ -1,62 +1,45 @@
 package api
 
 import (
-	"firebase-golang/database"
-	"github.com/gin-contrib/sessions"
+	"firebase-golang/database/roles"
+	"firebase-golang/database/templates"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
 func Template(c *gin.Context) {
-	isAuthored := GetUserState()
-	session := sessions.Default(c)
-	var email string
-	rawEmail := session.Get("email")
-	if rawEmail != nil {
-		email = rawEmail.(string)
-	}
-	var role string
-	rawRole := session.Get("role")
-	if rawRole != nil {
-		role = rawRole.(string)
-	}
-
-	templates, err := database.GetTemplatesList()
+	templatesList, err := templates.GetTemplatesList()
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	var id string
-	var username string
-	if role == "client" {
-		id = database.GetID(email)
-		username = database.GetUsername(email)
-	} else {
-		id = database.GetArchitectDocumentIDByEmail(email)
-		username = database.GetArchitectUsername(email)
-	}
+	authored := GetUserState()
 
 	res := map[string]interface{}{
-		"IsNonAuthenticated": !isAuthored,
-		"ID":                 id,
-		"Username":           username,
+		"IsNonAuthenticated": !authored,
+	}
+
+	if authored {
+		uid := c.Param("uid")
+		res["ID"] = uid
+		res["Username"] = roles.GetUsernameByUID(uid)
 	}
 
 	switch c.Query("spec") {
 	case "House Draft":
-		res["Templates"] = database.GetHouseDrafts(templates)
+		res["Templates"] = templates.GetHouseDrafts(templatesList)
 		c.HTML(http.StatusOK, "cottage_drafts.html", res)
 	case "Interior Design":
-		res["Templates"] = database.GetInteriorDesigns(templates)
+		res["Templates"] = templates.GetInteriorDesigns(templatesList)
 		c.HTML(http.StatusOK, "interior_designs.html", res)
 	case "Urban Project":
-		res["Templates"] = database.GetUrbanProjects(templates)
+		res["Templates"] = templates.GetUrbanProjects(templatesList)
 		c.HTML(http.StatusOK, "urban_projects.html", res)
 	case "Reconstruction":
-		res["Templates"] = database.GetReconstructionProjects(templates)
+		res["Templates"] = templates.GetReconstructionProjects(templatesList)
 		c.HTML(http.StatusOK, "restoration_projects.html", res)
 	default:
 		c.HTML(http.StatusOK, "index.html", res)

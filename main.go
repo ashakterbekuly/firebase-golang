@@ -3,6 +3,7 @@ package main
 import (
 	"firebase-golang/api"
 	"firebase-golang/api/auth"
+	"firebase-golang/api/edit_profile"
 	"firebase-golang/database"
 	"firebase-golang/firebase_auth"
 	"github.com/gin-contrib/sessions"
@@ -43,18 +44,18 @@ func main() {
 	})
 
 	//registration routes
-	r.GET("/register/role", auth.RegisterRoleGet)
+	r.GET("/register/roles", auth.RegisterRoleGet)
 	r.GET("/register/arch", auth.RegisterArchitectGet)
 	r.POST("/register/arch", auth.RegisterArchitect)
-	r.GET("/register/client", auth.RegisterClientGet)
-	r.POST("/register/client", auth.RegisterClient)
+	r.GET("/register/clients", auth.RegisterClientGet)
+	r.POST("/register/clients", auth.RegisterClient)
 
 	//login routes
 	r.GET("/login", auth.LoginGet)
 	r.POST("/login", auth.Login)
 
 	//main page
-	r.GET("/", api.MainPage)
+	r.GET("/:uid", api.MainPage)
 
 	//events page
 	r.GET("/events", api.EventsPage)
@@ -62,11 +63,8 @@ func main() {
 	//architecture page
 	r.GET("/architecture", api.ArchitecturePage)
 
-	//send mail
-	r.GET("/sendmail", api.SendMail)
-
 	//sign out
-	r.GET("/logout", auth.LogoutGet)
+	r.GET("/logout", auth.Logout)
 
 	//projects
 	r.GET("/projects", api.ProjectsGet)
@@ -75,13 +73,13 @@ func main() {
 	r.GET("/profile", api.Profile)
 
 	//edit profile
-	r.POST("/edit-profile", auth.EditProfile)
+	r.POST("/edit-profile", edit_profile.EditClient)
 
-	//edit architect profile
-	r.POST("/edit-architect", auth.EditArchitectProfile)
+	//edit architects profile
+	r.POST("/edit-architects", edit_profile.EditArchitectProfile)
 
 	//templates
-	r.GET("/template", api.Template)
+	r.GET("/templates", api.Template)
 
 	port := os.Getenv("PORT")
 	if port == "" {

@@ -2,8 +2,8 @@ package auth
 
 import (
 	"firebase-golang/api"
-	"firebase-golang/database"
-	"github.com/gin-contrib/sessions"
+	"firebase-golang/database/roles"
+	"firebase-golang/firebase_auth"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
@@ -33,27 +33,15 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	token, err := sendAuthRequest(login.Email, login.Password)
+	_, err = firebase_auth.GetUserToken(login.Email, login.Password)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
-	if token != "" {
-		api.SetUserState(true)
-		session := sessions.Default(c)
-		session.Set("token", token)
-		session.Set("email", login.Email)
-		session.Set("role", database.GetRoleByEmail(login.Email))
-		err = session.Save()
-		if err != nil {
-			log.Println(err)
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-	}
+	api.SetUserState(true)
 
 	// Redirect the user to the dashboard or home page
-	c.Redirect(http.StatusFound, "/")
+	c.Redirect(http.StatusFound, "/?uid="+roles.GetUIDByEmail(login.Email))
 }

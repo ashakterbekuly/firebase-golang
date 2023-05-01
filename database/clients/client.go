@@ -1,28 +1,29 @@
-package database
+package clients
 
 import (
 	"cloud.google.com/go/firestore"
 	"context"
+	"firebase-golang/database"
 	"firebase-golang/models"
 	"log"
 )
 
-func CreateClient(client models.ClientDao) error {
-	ref := Firestore.Collection("clients")
+func CreateClient(client models.ClientDao) string {
+	ref := database.Firestore.Collection("clients")
 
-	_, _, err := ref.Add(context.TODO(), &client)
+	doc, _, err := ref.Add(context.TODO(), &client)
 	if err != nil {
 		log.Println(err)
-		return err
+		return ""
 	}
 
-	return nil
+	return doc.ID
 }
 
-func UpdateClient(oldEmail string, client models.Client) error {
-	_, err := Firestore.
+func UpdateClient(uid string, client models.Client) error {
+	_, err := database.Firestore.
 		Collection("clients").
-		Doc(GetDocumentIDByEmail(oldEmail)).
+		Doc(uid).
 		Set(context.TODO(), map[string]interface{}{
 			"Email":    client.Email,
 			"Bio":      client.Bio,
@@ -36,8 +37,20 @@ func UpdateClient(oldEmail string, client models.Client) error {
 	return nil
 }
 
+func GetUsernameByUID(uid string) string {
+	doc, err := database.Firestore.
+		Collection("clients").
+		Doc(uid).Get(context.TODO())
+	if err != nil {
+		log.Println(err)
+		return ""
+	}
+
+	return doc.Data()["Name"].(string)
+}
+
 func GetClientByEmail(email string) (models.Client, error) {
-	ref := Firestore.Collection("clients")
+	ref := database.Firestore.Collection("clients")
 	doc := ref.Doc(GetDocumentIDByEmail(email))
 
 	snapshot, err := doc.Get(context.TODO())
@@ -88,7 +101,7 @@ func GetPhotoUrl(email string) string {
 func GetDocumentIDByEmail(email string) string {
 	var id string
 
-	ref := Firestore.Collection("clients")
+	ref := database.Firestore.Collection("clients")
 
 	docs, err := ref.Documents(context.TODO()).GetAll()
 	if err != nil {
@@ -114,7 +127,7 @@ func GetDocumentIDByEmail(email string) string {
 func GetClientByID(id string) (models.Client, error) {
 	var client models.Client
 
-	ref := Firestore.Collection("clients")
+	ref := database.Firestore.Collection("clients")
 
 	docs, err := ref.Documents(context.TODO()).GetAll()
 	if err != nil {

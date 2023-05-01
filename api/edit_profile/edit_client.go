@@ -1,19 +1,20 @@
-package auth
+package edit_profile
 
 import (
 	"firebase-golang/api"
 	"firebase-golang/database"
+	"firebase-golang/database/clients"
+	"firebase-golang/database/roles"
+	"firebase-golang/firebase_auth"
 	"firebase-golang/models"
-	"fmt"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
-func EditArchitectProfile(c *gin.Context) {
-	session := sessions.Default(c)
-	currentEmail := session.Get("email").(string)
+func EditClient(c *gin.Context) {
+	uid := c.Param("uid")
+	currentEmail := roles.GetEmailByUID(uid)
 
 	// Получаем данные из формы
 	currentPassword := c.PostForm("current-password")
@@ -31,66 +32,54 @@ func EditArchitectProfile(c *gin.Context) {
 	}
 	newName := c.PostForm("name")
 	newBio := c.PostForm("bio")
-	newSpecialization := c.PostForm("specialization")
-	newPortfolio := c.PostForm("portfolio")
 
 	form, _ := c.MultipartForm()
 	files := form.File["photo"]
 	var newPhotoUrl string
 	if len(files) == 0 {
-		newPhotoUrl = database.GetArchitectPhotoUrl(currentEmail)
+		newPhotoUrl = clients.GetPhotoUrl(currentEmail)
 	} else {
-		err := database.DeleteArchitectImage(database.GetArchitectPhotoUrl(currentEmail))
+		err := database.DeleteClientImage(clients.GetPhotoUrl(currentEmail))
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Ошибка удаления фото"})
 			return
 		}
 		for _, file := range files {
-			newPhotoUrl, _ = database.CreateArchitectPhoto(file)
+			newPhotoUrl, _ = database.CreateClientPhoto(file)
 		}
 	}
 
 	// Проверяем аутентификацию пользователя
-	token, err := sendAuthRequest(currentEmail, currentPassword)
+	token, err := firebase_auth.GetUserToken(currentEmail, currentPassword)
 	if err != nil {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверный логин или пароль"})
 		return
 	}
 
 	// Обновляем учетную запись пользователя
-	err = sendUpdateUserRequest(token, newEmail, newPassword)
+	err = firebase_auth.UpdateUserRequest(token, newEmail, newPassword)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	// Обновляем его в базе
-	err = database.UpdateArchitect(currentEmail, models.Architect{
-		Email:          newEmail,
-		Name:           newName,
-		Bio:            newBio,
-		PhotoUrl:       newPhotoUrl,
-		Specialization: newSpecialization,
-		Portfolio:      newPortfolio,
+	err = clients.UpdateClient(uid, models.Client{
+		Email:    newEmail,
+		Name:     newName,
+		Bio:      newBio,
+		PhotoUrl: newPhotoUrl,
 	})
 
-	err = database.UpdateRoleByEmail(currentEmail, newEmail, "architect")
+	err = roles.UpdateRoleByEmail(currentEmail, newEmail, "clients")
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
 	api.SetUserState(true)
-	session.Set("token", token)
-	session.Set("email", newEmail)
-	err = session.Save()
-	if err != nil {
-		log.Println(err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-		return
-	}
 
 	// Возвращаем сообщение об успешном обновлении учетной записи
-	c.Redirect(http.StatusFound, fmt.Sprintf("/profile?id=%s", database.GetArchitectDocumentIDByEmail(newEmail)))
+	c.Redirect(http.StatusFound, "/profile?uid="+uid)
 }
