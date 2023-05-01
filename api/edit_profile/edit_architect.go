@@ -39,9 +39,9 @@ func EditArchitectProfile(c *gin.Context) {
 	files := form.File["photo"]
 	var newPhotoUrl string
 	if len(files) == 0 {
-		newPhotoUrl = architects.GetArchitectPhotoUrl(currentEmail)
+		newPhotoUrl = architects.GetArchitectPhotoUrl(uid)
 	} else {
-		err := database.DeleteArchitectImage(architects.GetArchitectPhotoUrl(currentEmail))
+		err := database.DeleteArchitectImage(architects.GetArchitectPhotoUrl(uid))
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Ошибка удаления фото"})

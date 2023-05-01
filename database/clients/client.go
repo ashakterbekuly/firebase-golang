@@ -49,45 +49,6 @@ func GetUsernameByUID(uid string) string {
 	return doc.Data()["Name"].(string)
 }
 
-func GetClientByEmail(email string) (models.Client, error) {
-	ref := database.Firestore.Collection("clients")
-	doc := ref.Doc(GetDocumentIDByEmail(email))
-
-	snapshot, err := doc.Get(context.TODO())
-	if err != nil {
-		return models.Client{}, err
-	}
-
-	var client models.Client
-
-	err = snapshot.DataTo(&client)
-	if err != nil {
-		return models.Client{}, err
-	}
-
-	return client, nil
-}
-
-func GetUsername(email string) string {
-	client, err := GetClientByEmail(email)
-	if err != nil {
-		log.Println(err)
-		return ""
-	}
-
-	return client.Name
-}
-
-func GetID(email string) string {
-	client, err := GetClientByEmail(email)
-	if err != nil {
-		log.Println(err)
-		return ""
-	}
-
-	return client.ID
-}
-
 func GetPhotoUrl(uid string) string {
 	client, err := GetClientByUID(uid)
 	if err != nil {
@@ -96,32 +57,6 @@ func GetPhotoUrl(uid string) string {
 	}
 
 	return client.PhotoUrl
-}
-
-func GetDocumentIDByEmail(email string) string {
-	var id string
-
-	ref := database.Firestore.Collection("clients")
-
-	docs, err := ref.Documents(context.TODO()).GetAll()
-	if err != nil {
-		log.Println(err)
-		return ""
-	}
-
-	for _, doc := range docs {
-		rawEmail, ok := doc.Data()["Email"].(string)
-		if !ok {
-			log.Println(err)
-			continue
-		}
-
-		if email == rawEmail {
-			id = doc.Ref.ID
-		}
-	}
-
-	return id
 }
 
 func GetClientByUID(uid string) (models.Client, error) {
