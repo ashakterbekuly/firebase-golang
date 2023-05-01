@@ -25,10 +25,10 @@ func main() {
 	r.Use(sessions.Sessions("mysession", store))
 
 	// load static files
-	r.LoadHTMLGlob("./static/*.html")
-	r.Static("/css", "static/css")
-	r.Static("/img", "static/img")
-	r.Static("/js", "static/js")
+	r.LoadHTMLGlob("./web/*.html")
+	r.Static("/css", "web/css")
+	r.Static("/img", "web/img")
+	r.Static("/js", "web/js")
 
 	// create/configure database instance
 	db := database.InitFirestore()

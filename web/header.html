@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title> Main Page </title>
+  <meta name="description" content="ArchNEO landing Page" />
+  <meta name="keywords" content="" />
+  <meta name="author" content="" />
+  <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+  <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+  <style>
+    .gradient {
+      background: linear-gradient(90deg, #D2A244 0%, #e3b966 100%);
+    }
+
+    .app-collage {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+    }
+
+    .app-screen {
+      flex: 1;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+
+    .app-screen img {
+      width: 150%;
+      height: auto;
+    }
+
+    .modal {
+      display: none;
+      /* Hidden by default */
+      position: fixed;
+      /* Stay in place */
+      z-index: 1;
+      /* Sit on top */
+      left: 0;
+      top: 0;
+      width: 100%;
+      /* Full width */
+      height: 100%;
+      /* Full height */
+      overflow: auto;
+      /* Enable scroll if needed */
+      background-color: rgba(0, 0, 0, 0.4);
+      /* Black background with opacity */
+    }
+
+    .modal-content {
+      background-color: #fefefe;
+      margin: 10% auto;
+      /* 10% from the top and centered */
+      padding: 20px;
+      border: 1px solid #888;
+      width: 80%;
+      /* Could be more or less, depending on screen size */
+    }
+
+    .close {
+      color: #aaa;
+      float: right;
+      font-size: 28px;
+      font-weight: bold;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: black;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script>
+    {{ range .Events }}
+    $(document).ready(function() {
+      $("#{{ .Code }}").click(function() {
+        $.ajax({
+          type: "GET",
+          url: "/sendmail",
+          data: {
+            code: {{ .Code }}
+      },
+        success: function(response) {
+          console.log(response.message);
+        }
+      });
+      });
+    });
+    {{ end }}
+    {{ range .Projects }}
+    $(document).ready(function() {
+      $("#{{ .Author }}").click(function() {
+        $.ajax({
+          type: "GET",
+          url: "/architecture",
+          data: {
+            author: {{ .Author }}
+      },
+        success: function(response) {
+          console.log(response.message);
+        }
+      });
+      });
+    });
+    {{ end }}
+  </script>
+</head>
+<body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
+
+<nav id="header" class="fixed w-full z-30 top-0 text-white">
+  <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
+    <div class="pl-4 flex items-center align-middle">
+      <a class="toggleColour align-middle text-black no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
+        <img src="/img/logo_archneo_black.png" alt="" class="w-12 inline-block align-middle">
+        <div class="h-22 inline-block">ArchNEO</div>
+      </a>
+    </div>
+    <div class="block lg:hidden pr-4">
+      <button id="nav-toggle" class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+        <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <title>Menu</title>
+          <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+        </svg>
+      </button>
+    </div>
+    <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
+      <ul class="list-reset lg:flex justify-end flex-1 items-center">
+        <li class="mr-3">
+          <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/">Home</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/events">Events</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects">Projects</a>
+        </li>
+        {{ if .IsNonAuthenticated }}
+        <li class="mr-3">
+          <a href="/login">
+            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
+          </a>
+        </li>
+        <li class="mr-3">
+          <a href="/register/role">
+            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-gray-800 rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
+          </a>
+        </li>
+        {{ else }}
+        <li class="mr-3">
+          <div class="relative">
+            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button">
+              {{ .Username }}
+            </button>
+            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown">
+              <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Profile</a>
+              <a href="/edit-profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Edit profile</a>
+              <a href="/logout" class="block px-4 py-2 text-gray-800 hover:bg-gray-500 hover:text-white">Sign out</a>
+            </div>
+          </div>
+          <script>
+            // Получаем ссылки на кнопку и выпадающий список
+            const menuButton = document.getElementById("menu-button");
+            const menuDropdown = document.getElementById("menu-dropdown");
+            // Добавляем обработчик события "click" к кнопке
+            menuButton.addEventListener("click", function() {
+              // Переключаем отображение выпадающего списка
+              menuDropdown.classList.toggle("hidden");
+            });
+          </script>
+        </li>
+        {{ end }}
+      </ul>
+    </div>
+  </div>
+  <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
+</nav>
+
+<script>
+  var scrollpos = window.scrollY;
+  var header = document.getElementById("header");
+  var navcontent = document.getElementById("nav-content");
+  var navaction = document.getElementById("navAction");
+  var brandname = document.getElementById("brandname");
+  var toToggle = document.querySelectorAll(".toggleColour");
+  document.addEventListener("scroll", function() {
+    /*Apply classes for slide in bar*/
+    scrollpos = window.scrollY;
+    if (scrollpos > 10) {
+      header.classList.add("bg-white");
+      navaction.classList.remove("bg-white");
+      navaction.classList.add("gradient");
+      navaction.classList.remove("text-gray-800");
+      navaction.classList.add("text-white");
+      //Use to switch toggleColour colours
+      for (var i = 0; i < toToggle.length; i++) {
+        toToggle[i].classList.add("text-gray-800");
+        toToggle[i].classList.remove("text-white");
+      }
+      header.classList.add("shadow");
+      navcontent.classList.remove("bg-gray-100");
+      navcontent.classList.add("bg-white");
+    } else {
+      header.classList.remove("bg-white");
+      navaction.classList.remove("gradient");
+      navaction.classList.add("bg-white");
+      navaction.classList.remove("text-white");
+      navaction.classList.add("text-gray-800");
+      //Use to switch toggleColour colours
+      for (var i = 0; i < toToggle.length; i++) {
+        toToggle[i].classList.add("text-white");
+        toToggle[i].classList.remove("text-gray-800");
+      }
+      header.classList.remove("shadow");
+      navcontent.classList.remove("bg-white");
+      navcontent.classList.add("bg-gray-100");
+    }
+  });
+</script>
+<script>
+  /*Toggle dropdown list*/
+  /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+  var navMenuDiv = document.getElementById("nav-content");
+  var navMenu = document.getElementById("nav-toggle");
+  document.onclick = check;
+
+  function check(e) {
+    var target = (e && e.target) || (event && event.srcElement);
+    //Nav Menu
+    if (!checkParent(target, navMenuDiv)) {
+      // click NOT on the menu
+      if (checkParent(target, navMenu)) {
+        // click on the link
+        if (navMenuDiv.classList.contains("hidden")) {
+          navMenuDiv.classList.remove("hidden");
+        } else {
+          navMenuDiv.classList.add("hidden");
+        }
+      } else {
+        // click both outside link and outside menu, hide menu
+        navMenuDiv.classList.add("hidden");
+      }
+    }
+  }
+
+  function checkParent(t, elm) {
+    while (t.parentNode) {
+      if (t == elm) {
+        return true;
+      }
+      t = t.parentNode;
+    }
+    return false;
+  }
+</script>
+</body>
+</html>

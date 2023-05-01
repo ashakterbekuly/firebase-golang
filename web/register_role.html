@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register Client</title>
+    <base href="/">
+    <link rel = "icon" type = "image/png" href = "img/logo.png">
+    <!-- Bootstrap CSS-->
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <!-- Main CSS  -->
+    <link rel="stylesheet" href="css/main.css" />
+  </head>
+  <body>
+    <div class="container ">
+      <div class="row">
+        <div class="col-12 d-flex justify-content-center">
+          <div
+            class="card shadow-lg p-3 mb-5 bg-body d-flex align-items-center justify-content-center"
+            style="width: 40rem; height: 30rem"
+          >
+            <img
+              src="img/logo.png"
+              class="align-self-center card-img-top"
+              alt="archneo_Logo"
+            />
+            <!-- Sign UP -->
+            <p class="h1 align-self-center">Select your role</p>
+
+            <div class="form-content">
+                <div class="row">
+                
+                    <form class="form-check mt-4" action="/register/client" method="GET">
+                        <button type="submit"  class="btn2 btn-outline-dark btn-lg">Client</button>
+                      </form>
+
+                      <form class="form-check mt-4" action="/register/arch" method="GET">
+                        <button type="submit" class="btn2 btn-outline-dark btn-lg">Specialist</button>
+                      </form>    
+                   
+                </div>
+            </div>
+          
+            
+
+            <p class="text-center text-muted mt-3 mb-0">Have already an account? <a href="/login"
+              class="fw-bold text-body"><u>Login here</u></a></p>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- ################################################### -->
+    <!-- Mian JS -->
+    <script src=""></script>
+    <!-- Bootsrap JS -->
+    <script
+      src="https://kit.fontawesome.com/d348c554e6.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
+  </body>
+</html>
