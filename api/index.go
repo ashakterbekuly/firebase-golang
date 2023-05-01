@@ -56,7 +56,7 @@ func MainPage(c *gin.Context) {
 		return
 	}
 
-	uid := c.Param("uid")
+	uid := c.Query("uid")
 	res["ID"] = uid
 	res["Username"] = roles.GetUsernameByUID(uid)
 

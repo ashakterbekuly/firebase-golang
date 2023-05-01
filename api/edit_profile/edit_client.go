@@ -13,7 +13,7 @@ import (
 )
 
 func EditClient(c *gin.Context) {
-	uid := c.Param("uid")
+	uid := c.Query("uid")
 	currentEmail := roles.GetEmailByUID(uid)
 
 	// Получаем данные из формы
@@ -37,9 +37,9 @@ func EditClient(c *gin.Context) {
 	files := form.File["photo"]
 	var newPhotoUrl string
 	if len(files) == 0 {
-		newPhotoUrl = clients.GetPhotoUrl(currentEmail)
+		newPhotoUrl = clients.GetPhotoUrl(uid)
 	} else {
-		err := database.DeleteClientImage(clients.GetPhotoUrl(currentEmail))
+		err := database.DeleteClientImage(clients.GetPhotoUrl(uid))
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Ошибка удаления фото"})

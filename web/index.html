@@ -115,40 +115,6 @@
 
   <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script>
-  {{ range .Events }}
-  $(document).ready(function() {
-  $("#{{ .Code }}").click(function() {
-  $.ajax({
-  type: "GET",
-  url: "/sendmail",
-  data: {
-  code: {{ .Code }}
-  },
-  success: function(response) {
-  console.log(response.message);
-  }
-  });
-  });
-  });
-  {{ end }}
-  {{ range .Projects }}
-  $(document).ready(function() {
-  $("#{{ .Author }}").click(function() {
-  $.ajax({
-  type: "GET",
-  url: "/architecture",
-  data: {
-  author: {{ .Author }}
-  },
-  success: function(response) {
-  console.log(response.message);
-  }
-  });
-  });
-  });
-  {{ end }}
-  </script>
   <script
   src="https://code.jquery.com/jquery-3.3.1.js"
   integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -202,6 +168,7 @@
     </div>
     <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
       <ul class="list-reset lg:flex justify-end flex-1 items-center">
+        {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/">Home</a>
         </li>
@@ -211,7 +178,6 @@
         <li class="mr-3">
           <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects">Projects</a>
         </li>
-        {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a href="/login">
             <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
@@ -222,14 +188,35 @@
             <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-gray-800 rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
           </a>
         </li>
+        <li>
+          <div class="relative">
+            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">
+              eng
+            </button>
+            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">
+              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>
+              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>
+              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>
+            </div>
+          </div>
+        </li>
         {{ else }}
+        <li class="mr-3">
+          <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/?uid={{ .ID }}">Home</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/events?uid={{ .ID }}">Events</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects?uid={{ .ID }}">Projects</a>
+        </li>
         <li class="mr-3">
           <div class="relative">
             <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
               {{ .Username }}
             </button>
             <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-profile">
-              <a href="/profile?id={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
+              <a href="/profile?uid={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
               <a href="/logout" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Sign out</a>
             </div>
           </div>

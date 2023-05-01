@@ -11,10 +11,10 @@ import (
 
 func Profile(c *gin.Context) {
 	authored := GetUserState()
-	uid := c.Param("uid")
+	uid := c.Query("uid")
 
 	if roles.GetRoleByUID(uid) == "client" {
-		client, err := clients.GetClientByID(uid)
+		client, err := clients.GetClientByUID(uid)
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -23,13 +23,14 @@ func Profile(c *gin.Context) {
 
 		c.HTML(http.StatusOK, "profile.html", gin.H{
 			"IsNonAuthenticated": !authored,
+			"ID":                 uid,
 			"Name":               client.Name,
 			"Bio":                client.Bio,
 			"PhotoUrl":           client.PhotoUrl,
 			"Username":           client.Name,
 		})
 	} else {
-		architect, err := architects.GetArchitectByID(uid)
+		architect, err := architects.GetArchitectByUID(uid)
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -38,6 +39,7 @@ func Profile(c *gin.Context) {
 
 		c.HTML(http.StatusOK, "architecture.html", gin.H{
 			"IsNonAuthenticated": !authored,
+			"ID":                 uid,
 			"Name":               architect.Name,
 			"Bio":                architect.Bio,
 			"PhotoUrl":           architect.PhotoUrl,

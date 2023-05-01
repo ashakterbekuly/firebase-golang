@@ -10,7 +10,6 @@ import (
 
 func ProjectsGet(c *gin.Context) {
 	authored := GetUserState()
-	uid := c.Param("uid")
 
 	projectsList, err := projects.GetProjectsList()
 	if err != nil {
@@ -19,10 +18,20 @@ func ProjectsGet(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "projects.html", gin.H{
+	res := map[string]interface{}{
 		"IsNonAuthenticated": !authored,
 		"Projects":           projectsList,
-		"ID":                 uid,
-		"Username":           roles.GetUsernameByUID(uid),
-	})
+	}
+
+	if !authored {
+		c.HTML(http.StatusOK, "projects.html", res)
+		return
+	}
+
+	uid := c.Query("uid")
+
+	res["ID"] = uid
+	res["Username"] = roles.GetUsernameByUID(uid)
+
+	c.HTML(http.StatusOK, "projects.html", res)
 }

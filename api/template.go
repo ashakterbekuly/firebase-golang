@@ -23,7 +23,7 @@ func Template(c *gin.Context) {
 	}
 
 	if authored {
-		uid := c.Param("uid")
+		uid := c.Query("uid")
 		res["ID"] = uid
 		res["Username"] = roles.GetUsernameByUID(uid)
 	}

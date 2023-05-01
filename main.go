@@ -55,7 +55,7 @@ func main() {
 	r.POST("/login", auth.Login)
 
 	//main page
-	r.GET("/:uid", api.MainPage)
+	r.GET("/", api.MainPage)
 
 	//events page
 	r.GET("/events", api.EventsPage)

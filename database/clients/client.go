@@ -88,8 +88,8 @@ func GetID(email string) string {
 	return client.ID
 }
 
-func GetPhotoUrl(email string) string {
-	client, err := GetClientByEmail(email)
+func GetPhotoUrl(uid string) string {
+	client, err := GetClientByUID(uid)
 	if err != nil {
 		log.Println(err)
 		return ""
@@ -124,28 +124,19 @@ func GetDocumentIDByEmail(email string) string {
 	return id
 }
 
-func GetClientByID(id string) (models.Client, error) {
+func GetClientByUID(uid string) (models.Client, error) {
 	var client models.Client
 
 	ref := database.Firestore.Collection("clients")
 
-	docs, err := ref.Documents(context.TODO()).GetAll()
+	docRef, err := ref.Doc(uid).Get(context.TODO())
 	if err != nil {
-		return client, err
+		return models.Client{}, err
 	}
 
-	for _, doc := range docs {
-		rawID, ok := doc.Data()["ID"].(string)
-		if !ok {
-			return client, err
-		}
-
-		if id == rawID {
-			err = doc.DataTo(&client)
-			if err != nil {
-				return client, err
-			}
-		}
+	err = docRef.DataTo(&client)
+	if err != nil {
+		return models.Client{}, err
 	}
 
 	return client, nil

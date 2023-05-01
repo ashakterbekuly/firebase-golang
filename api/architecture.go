@@ -8,7 +8,7 @@ import (
 
 func ArchitecturePage(c *gin.Context) {
 	authored := GetUserState()
-	uid := c.Param("uid")
+	uid := c.Query("uid")
 
 	c.HTML(http.StatusOK, "architecture.html", gin.H{
 		"IsNonAuthenticated": !authored,

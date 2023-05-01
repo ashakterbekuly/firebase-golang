@@ -116,28 +116,19 @@ func GetArchitectDocumentIDByEmail(email string) string {
 	return id
 }
 
-func GetArchitectByID(id string) (models.Architect, error) {
+func GetArchitectByUID(uid string) (models.Architect, error) {
 	var architect models.Architect
 
 	ref := database.Firestore.Collection("architects")
 
-	docs, err := ref.Documents(context.TODO()).GetAll()
+	docRef, err := ref.Doc(uid).Get(context.Background())
 	if err != nil {
 		return architect, err
 	}
 
-	for _, doc := range docs {
-		rawID, ok := doc.Data()["ID"].(string)
-		if !ok {
-			return architect, err
-		}
-
-		if id == rawID {
-			err = doc.DataTo(&architect)
-			if err != nil {
-				return architect, err
-			}
-		}
+	err = docRef.DataTo(&architect)
+	if err != nil {
+		return architect, err
 	}
 
 	return architect, nil

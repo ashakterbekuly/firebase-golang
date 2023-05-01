@@ -10,7 +10,6 @@ import (
 
 func EventsPage(c *gin.Context) {
 	authored := GetUserState()
-	uid := c.Param("uid")
 
 	eventsList, err := events.GetEventsList()
 	if err != nil {
@@ -19,10 +18,20 @@ func EventsPage(c *gin.Context) {
 		return
 	}
 
-	c.HTML(http.StatusOK, "events.html", gin.H{
+	res := map[string]interface{}{
 		"IsNonAuthenticated": !authored,
 		"Events":             eventsList,
-		"ID":                 uid,
-		"Username":           roles.GetUsernameByUID(uid),
-	})
+	}
+
+	if !authored {
+		c.HTML(http.StatusOK, "events.html", res)
+		return
+	}
+
+	uid := c.Query("uid")
+
+	res["ID"] = uid
+	res["Username"] = roles.GetUsernameByUID(uid)
+
+	c.HTML(http.StatusOK, "events.html", res)
 }

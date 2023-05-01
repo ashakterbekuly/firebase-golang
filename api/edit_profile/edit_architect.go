@@ -13,7 +13,7 @@ import (
 )
 
 func EditArchitectProfile(c *gin.Context) {
-	uid := c.Param("uid")
+	uid := c.Query("uid")
 	currentEmail := roles.GetEmailByUID(uid)
 
 	// Получаем данные из формы
