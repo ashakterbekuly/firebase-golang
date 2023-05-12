@@ -25,7 +25,7 @@
 </head>
 <body class="leading-normal tracking-normal text-white bg-white" style="font-family: 'Source Sans Pro', sans-serif;">
 <!--Nav-->
-<nav id="header" class="fixed w-full z-30 top-0 text-white">
+<nav id="header" class="fixed w-full z-30 top-0 text-white bg-[#14213d]">
   <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
     <div class="pl-4 flex items-center align-middle">
       <a class="toggleColour align-middle text-black no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
@@ -110,20 +110,21 @@
 <section class="bg-white mx-auto">
   <div class="my-8 flex flex-wrap pt-4 pb-12">
 
-    <h2 class="mx-auto my-2 text-5xl font-bold text-gray-800"> Upcoming events </h2>
+    <h2 class="mx-auto mb-6 text-5xl font-bold text-black"> Upcoming events </h2>
 
-    <div class="flex flex-wrap overflow-x-auto bg-white">
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 bg-white">
       {{ range .Events }}
-      <section class="w-96 py-4 my-4 mx-10 border-2 p-6 rounded-t">
+      <section class="py-4 p-6 border border-black">
         <div class=" rounded-t rounded-b-none overflow-hidden">
 
-          <div class="h-16">
-            <span class="text-xl text-black font-bold">{{ .Title }}</span>
-          </div>
-          <img class="flex-shrink-0 max-h-60 w-84 h-64 object-fill" src='{{ .ImageUrl }}' alt="...">
 
-          <div class="flex justify-center">
-            <button class="bg-gray-300 hover:bg-gray-600 hover:text-white px-12 py-2 py-1 rounded-full text-black text-xl mt-8 more-info">More Info</button>
+          <img class="object-fill h-64" src='{{ .ImageUrl }}' alt="...">
+          <div class="h-12 mt-6">
+            <span class="text-3xl text-black hover:underline">{{ .Title }}</span>
+          </div>
+
+          <div class="flex justify-end">
+            <button class="hover:underline px-2 py-2 py-1 text-black text-md mt-8 more-info text-right">REGISTER</button>
           </div>
           <!--Modal window-->
           <div class="modal text-black h-screen w-full fixed left-0 top-0 flex justify-center items-center bg-black bg-opacity-50 hidden">
@@ -232,8 +233,8 @@
     /*Apply classes for slide in bar*/
     scrollpos = window.scrollY;
     if (scrollpos > 10) {
-      header.classList.add("bg-white");
-      navaction.classList.remove("bg-white");
+      header.classList.add("bg-white bg-opacity-50");
+      navaction.classList.remove("bg-white bg-opacity-50");
       navaction.classList.add("gradient");
       navaction.classList.remove("text-gray-800");
       navaction.classList.add("text-white");
@@ -244,11 +245,11 @@
       }
       header.classList.add("shadow");
       navcontent.classList.remove("bg-gray-100");
-      navcontent.classList.add("bg-white");
+      navcontent.classList.add("bg-white bg-opacity-50");
     } else {
-      header.classList.remove("bg-white");
+      header.classList.remove("bg-white bg-opacity-50");
       navaction.classList.remove("gradient");
-      navaction.classList.add("bg-white");
+      navaction.classList.add("bg-white bg-opacity-50");
       navaction.classList.remove("text-white");
       navaction.classList.add("text-gray-800");
       //Use to switch toggleColour colours
@@ -257,7 +258,7 @@
         toToggle[i].classList.remove("text-gray-800");
       }
       header.classList.remove("shadow");
-      navcontent.classList.remove("bg-white");
+      navcontent.classList.remove("bg-white bg-opacity-50");
       navcontent.classList.add("bg-gray-100");
     }
   });

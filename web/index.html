@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="en">
 <head>
   <style>
     .gradient {
-      background: linear-gradient(90deg, #D2A244 0%, #e3b966 100%);
+      background: linear-gradient(#D2A244 0%, #e3b966 100%);
     }
 
     .app-collage {
@@ -22,50 +22,6 @@
       width: 150%;
       height: auto;
     }
-
-    .modal {
-      display: none;
-      /* Hidden by default */
-      position: fixed;
-      /* Stay in place */
-      z-index: 1;
-      /* Sit on top */
-      left: 0;
-      top: 0;
-      width: 100%;
-      /* Full width */
-      height: 100%;
-      /* Full height */
-      overflow: auto;
-      /* Enable scroll if needed */
-      background-color: rgba(0, 0, 0, 0.4);
-      /* Black background with opacity */
-    }
-
-    .modal-content {
-      background-color: #fefefe;
-      margin: 10% auto;
-      /* 10% from the top and centered */
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-      /* Could be more or less, depending on screen size */
-    }
-
-    .close {
-      color: #aaa;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-    }
-
-    .close:hover,
-    .close:focus {
-      color: black;
-      text-decoration: none;
-      cursor: pointer;
-    }
-
     .slider {
       width: 100%;
       margin: 0 auto;
@@ -84,15 +40,6 @@
       opacity: 1;
     }
 
-    .event_text{
-      position: absolute;
-      top: 10%;
-      left: 10%;
-      transform: translate(-50%, -50%);
-      z-index: 1;
-      color: #fff;
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
-    }
     #menu-dropdown-locale{
       max-width: 100px;
     }
@@ -105,16 +52,20 @@
   <meta name="description" content="ArchNEO landing Page" />
   <meta name="keywords" content="" />
   <meta name="author" content="" />
+
   <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
   <script src="https://cdn.tailwindcss.com"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
 
   <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
   <script>
   {{ range .Events }}
   $(document).ready(function() {
@@ -189,7 +140,7 @@
     <div class="pl-4 flex items-center align-middle">
       <a class="toggleColour align-middle text-black no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
         <img src="/img/logo_archneo_black.png" alt="" class="w-12 inline-block align-middle">
-        <div class="h-22 inline-block">ArchNEO</div>
+        <div class="h-18 inline-block">ArchNEO</div>
       </a>
     </div>
     <div class="block lg:hidden pr-4">
@@ -214,12 +165,12 @@
         {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a href="/login">
-            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
+            <button class="lg:mx-0 bg-gray-800 text-xl text-white rounded-xl my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
           </a>
         </li>
         <li class="mr-3">
           <a href="/register/role">
-            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-gray-800 rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
+            <button class="lg:mx-0 bg-gray-200 text-xl text-gray-800 rounded-xl my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
           </a>
         </li>
         {{ else }}
@@ -272,38 +223,44 @@
 <!--    NAV END     -->
 
 <!--    MAIN BLOCK START    -->
-<div class="pt-24">
+<div class="pt-24 w-full">
 
   <!--    1st BLOCK START    -->
-  <div class="flex items-center grid-flow-row mx-10 space-x-28">
-    <!--    Left COLUMN START    -->
-    <div class="w-1/3 text-center md:text-left">
-      <h1 class="my-4 text-5xl font-bold leading-tight"> Creating dream spaces together </h1>
-      <p class="leading-normal text-2xl mb-8"> We help to find professionals in their field and help to acquire new knowledge and skills </p>
+  <div class="container">
+    <p class="my-4 text-4xl md:text-6xl lg:text-8xl font-monospace mx-4 h-16 text-right text-black">creating dream spaces</p>
+    <p class="my-4 text-4xl md:text-6xl lg:text-8xl font-bold mx-8 mx-sm-2 h-18 text-right text-black italic">together</p>
+  </div>
+  <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 align-middle">
+    <div>
+    <p class="text-xl mx-6 ml-24 lg:w-full md:my-8 sm:my-8 lg:my-0 text-right text-black"> We help to find professionals in their field and help to acquire new knowledge and skills </p>
+    </div>
+    <div class="text-center md:text-right lg:text-center mx-8">
       <a href="#download-div">
-        <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Download App </button>
+        <button class="bg-transparent border border-5 border-gray-800 hover:text-white hover:bg-gray-900 lg:text-2xl md:text-xl sm:text-xl text-gray-800 rounded-xl my-1 py-2 px-16 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out"> Download App </button>
       </a>
     </div>
-    <!--    Left COLUMN END    -->
+  </div>
+  <!--    1st BLOCK END    -->
 
-    <!--  RIGHT PART START    -->
-    <div class="w-2/3 mx-3 mx-auto">
+  <!--    2nd BLOCK START    -->
+  <div class="mx-8 grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1">
+    <div class="mx-3">
 
-          <!--  SLIDER START    -->
-      <section class="flex flex-wrap border-b py-4">
-        <div class="container max-w-3xl mx-auto m-4 text-center bg-white rounded-3xl">
+      <!--  SLIDER START    -->
+      <section class="flex flex-wrap py-4">
+        <div class="container mx-auto m-4 text-center bg-white rounded-3xl">
           <div class="slider">
             {{ range .Events }}
             <div class="">
               <h3 class="text-3xl font-bold mt-8 text-black mb-2 mx-6">{{ .Title }}</h3>
               <h4 class="text-2xl font-bold my-1 text-black mx-6">{{ .DateTimeFromString }}</h4>
-              <img src="{{ .ImageUrl }}" alt="project-1" class="mx-auto rounded-3xl object-fill w-auto h-96">
+              <img src="{{ .ImageUrl }}" alt="project-1" class="mx-auto rounded-3xl object-fill w-auto h-3/4 px-8">
             </div>
             {{ end }}
           </div>
         </div>
       </section>
-        <!--  SLIDER END    -->
+      <!--  SLIDER END    -->
 
       <!--  SLIDER'S SCRIPT START    -->
     <script type="text/javascript">
@@ -334,15 +291,14 @@
       <!--  SLIDER'S SCRIPT END    -->
 
   </div>
-    <!--  RIGHT PART END    -->
 
 </div>
-  <!--    1st BLOCK END    -->
+  <!--    2nd BLOCK END    -->
 
   <!--   WAVE START   -->
 <div class="relative -mt-12 lg:-mt-24">
-  <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+  <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" fill="none" fill-rule="evenodd">
       <g transform="translate(-2.000000, 44.000000)" fill="#FFFFFF" fill-rule="nonzero">
         <path d="M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496" opacity="0.100000001"></path>
         <path d="M100,104.708498 C277.413333,72.2345949 426.147877,52.5246657 546.203633,45.5787101 C666.259389,38.6327546 810.524845,41.7979068 979,55.0741668 C931.069965,56.122511 810.303266,74.8455141 616.699903,111.243176 C423.096539,147.640838 250.863238,145.462612 100,104.708498 Z" opacity="0.100000001"></path>
@@ -357,34 +313,29 @@
   <!--   WAVE END   -->
 
   <!--   CATEGORIES  START   -->
-<section class="bg-white border-b py-8">
-  <div class="pt-4 pb-12">
 
-    <div>
-    <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-gray-800 flex flex-col flex-grow flex-shrink "> Samples </h2>
-    </div>
+  <div class="pt-4 pb-4 bg-white">
+<!--    <div>-->
+<!--      <h2 class="my-2 text-4xl font-bold font-monospace mx-20 text-right text-black"> Templates </h2>-->
+<!--    </div>-->
 
-    <div class="my-2 grid grid-cols-2 gap-4">
+    <section class="py-2text-right grid md:grid-cols-2 lg:grid-cols-2 m-24">
       {{ range .Templates }}
-      <div class="p-4 flex justify-center items-center">
-        <!--в общем будет 4 плитки, 2 строки это как бы категории проектов -->
-
-        <div class="text-center">
-        <h3 class="text-3xl text-gray-800 font-bold my-3">{{ .Specification }}</h3>
+      <div class="flex justify-center items-center lg:mx-8 md:mx-4 sm:mx-20 h-72 md:h-96">
+        <div class="text-right">
+          <h3 class="my-4 text-3xl font-bold font-monospace mx-4 text-right text-black">{{ .Specification }}</h3>
           <div class="">
             <a href="/template?spec={{ .Specification }}">
-            <!--нужно вставить определенную картинку из папки "cottage-drafts" при клике она переходит на страницу с чертежами коттеджей-->
-            <img class="max-h-96 object-fill transform transition hover:scale-105 duration-300 ease-in-out focus:shadow-outline" src="{{ .ImageUrl }}" alt="...">
+              <img class="h-84 object-fill transform transition hover:scale-105 duration-300 ease-in-out focus:shadow-outline" src="{{ .ImageUrl }}" alt="...">
             </a>
           </div>
         </div>
-
       </div>
+      <div></div>
+      <div></div>
       {{ end }}
-
-    </div>
+    </section>
   </div>
-</section>
   <!--   CATEGORIES  END   -->
 
 <!--   WAVE START   -->
