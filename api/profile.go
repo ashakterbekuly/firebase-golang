@@ -1,29 +1,20 @@
 package api
 
 import (
-	"firebase-golang/database"
-	"github.com/gin-contrib/sessions"
+	"firebase-golang/database/architects"
+	"firebase-golang/database/clients"
+	"firebase-golang/database/roles"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
 func Profile(c *gin.Context) {
-	isAuthored := GetUserState()
-	session := sessions.Default(c)
-	var email string
-	rawEmail := session.Get("email")
-	if rawEmail != nil {
-		email = rawEmail.(string)
-	}
-	var role string
-	rawRole := session.Get("role")
-	if rawRole != nil {
-		role = rawRole.(string)
-	}
+	authored := GetUserState()
+	uid := c.Query("uid")
 
-	if role == "client" {
-		client, err := database.GetClientByEmail(email)
+	if roles.GetRoleByUID(uid) == "client" {
+		client, err := clients.GetClientByUID(uid)
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -31,14 +22,15 @@ func Profile(c *gin.Context) {
 		}
 
 		c.HTML(http.StatusOK, "profile.html", gin.H{
-			"IsNonAuthenticated": !isAuthored,
+			"IsNonAuthenticated": !authored,
+			"ID":                 uid,
 			"Name":               client.Name,
 			"Bio":                client.Bio,
 			"PhotoUrl":           client.PhotoUrl,
-			"Username":           database.GetUsername(email),
+			"Username":           client.Name,
 		})
 	} else {
-		architect, err := database.GetArchitectByEmail(email)
+		architect, err := architects.GetArchitectByUID(uid)
 		if err != nil {
 			log.Println(err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -46,13 +38,14 @@ func Profile(c *gin.Context) {
 		}
 
 		c.HTML(http.StatusOK, "architecture.html", gin.H{
-			"IsNonAuthenticated": !isAuthored,
+			"IsNonAuthenticated": !authored,
+			"ID":                 uid,
 			"Name":               architect.Name,
 			"Bio":                architect.Bio,
 			"PhotoUrl":           architect.PhotoUrl,
 			"Specialization":     architect.Specialization,
 			"Portfolio":          architect.Portfolio,
-			"Username":           database.GetArchitectUsername(email),
+			"Username":           architect.Name,
 		})
 	}
 }

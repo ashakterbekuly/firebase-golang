@@ -1,13 +1,14 @@
-package database
+package templates
 
 import (
 	"context"
+	"firebase-golang/database"
 	"firebase-golang/models"
 )
 
 func GetTemplatesList() ([]models.Template, error) {
 	var templates []models.Template
-	coll := Firestore.Collection("templates")
+	coll := database.Firestore.Collection("templates")
 
 	documents, err := coll.Documents(context.TODO()).GetAll()
 	if err != nil {

@@ -29,7 +29,7 @@ func InitStorage() *storage.BucketHandle {
 }
 
 func CreateClientPhoto(file *multipart.FileHeader) (string, error) {
-	object := storageBucket.Object("client-photos/" + file.Filename)
+	object := storageBucket.Object("clients-photos/" + file.Filename)
 
 	writer := object.NewWriter(context.TODO())
 	defer func() {
@@ -59,7 +59,7 @@ func CreateClientPhoto(file *multipart.FileHeader) (string, error) {
 
 func DeleteClientImage(oldPhotoUrl string) error {
 	objectName := strings.Split(strings.Split(oldPhotoUrl, "%2F")[1], "?alt")[0]
-	obj := storageBucket.Object("client-photos/" + objectName)
+	obj := storageBucket.Object("clients-photos/" + objectName)
 
 	// Удаляем файл из хранилища
 	err := obj.Delete(context.TODO())
@@ -71,7 +71,7 @@ func DeleteClientImage(oldPhotoUrl string) error {
 }
 
 func CreateArchitectPhoto(file *multipart.FileHeader) (string, error) {
-	object := storageBucket.Object("architect-photos/" + file.Filename)
+	object := storageBucket.Object("architects-photos/" + file.Filename)
 
 	writer := object.NewWriter(context.TODO())
 	defer func() {
@@ -101,7 +101,7 @@ func CreateArchitectPhoto(file *multipart.FileHeader) (string, error) {
 
 func DeleteArchitectImage(oldPhotoUrl string) error {
 	objectName := strings.Split(strings.Split(oldPhotoUrl, "%2F")[1], "?alt")[0]
-	obj := storageBucket.Object("architect-photos/" + objectName)
+	obj := storageBucket.Object("architects-photos/" + objectName)
 
 	// Удаляем файл из хранилища
 	err := obj.Delete(context.TODO())

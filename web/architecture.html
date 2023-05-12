@@ -101,7 +101,7 @@
 <body class="antialiased text-gray-900 leading-normal tracking-wider bg-cover bg-center" style="background-image:url('https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); font-family: 'Source Sans Pro', sans-serif;">
 <!--Nav-->
 <!--#include file="./header.html" -->
-<nav id="header" class="fixed w-full z-30 top-0 text-white bg-white">
+<nav id="header" class="fixed w-full z-30 top-0 text-white">
   <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
     <div class="pl-4 flex items-center align-middle">
       <a class="toggleColour align-middle text-black no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
@@ -119,6 +119,7 @@
     </div>
     <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
       <ul class="list-reset lg:flex justify-end flex-1 items-center">
+        {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/">Home</a>
         </li>
@@ -129,12 +130,44 @@
           <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects">Projects</a>
         </li>
         <li class="mr-3">
+          <a href="/login">
+            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
+          </a>
+        </li>
+        <li class="mr-3">
+          <a href="/register/role">
+            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-gray-800 rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
+          </a>
+        </li>
+        <li>
+          <div class="relative">
+            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">
+              eng
+            </button>
+            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">
+              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>
+              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>
+              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>
+            </div>
+          </div>
+        </li>
+        {{ else }}
+        <li class="mr-3">
+          <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/?uid={{ .ID }}">Home</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/events?uid={{ .ID }}">Events</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects?uid={{ .ID }}">Projects</a>
+        </li>
+        <li class="mr-3">
           <div class="relative">
             <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
               {{ .Username }}
             </button>
             <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-profile">
-              <a href="/profile?id={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
+              <a href="/profile?uid={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
               <a href="/logout" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Sign out</a>
             </div>
           </div>
@@ -151,6 +184,8 @@
             </div>
           </div>
         </li>
+        {{ end }}
+
         <script>
           // Получаем ссылки на кнопку и выпадающий список
           const menuButtonProfile = document.getElementById("menu-button-profile");
@@ -172,6 +207,7 @@
   </div>
   <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
 </nav>
+
 <div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-4 lg:my-0">
   <!--Main Col-->
   <div id="profile" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white mx-6 lg:mx-0">
@@ -203,7 +239,7 @@
             <img src="{{ .PhotoUrl }}" alt="Image" class="max-w-sm mx-auto" />
           </div>
           <h1 class="my-4 text-xl font-bold leading-tight text-black">Editing Info</h1>
-          <form action="/edit-architect" method="POST" enctype="multipart/form-data">
+          <form action="/edit-architect?uid={{ .ID }}" method="POST" enctype="multipart/form-data">
             <label class="block mx-auto my-4">
               <span class="sr-only">Choose profile photo</span>
               <input type="file" name="photo" class="block w-full text-sm text-slate-500
