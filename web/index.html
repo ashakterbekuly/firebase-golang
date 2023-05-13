@@ -150,7 +150,7 @@
       </a>
     </div>
     <div class="block lg:hidden pr-4">
-      <button id="nav-toggle" class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+      <button id="nav-toggle" class="flex items-center p-1 hover:text-white focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
         <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <title>Menu</title>
           <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
@@ -233,8 +233,8 @@
 
   <!--    1st BLOCK START    -->
   <div class="container">
-    <p class="my-4 text-4xl md:text-6xl lg:text-8xl font-monospace mx-4 h-16 text-right text-black">creating dream spaces</p>
-    <p class="my-6 text-4xl md:text-6xl lg:text-8xl font-bold mx-8 mx-sm-2 h-20 text-right text-[#fca311] italic">together</p>
+    <p class="my-4 text-5xl md:text-6xl lg:text-8xl font-monospace lg:mx-4 md:mx-2 sm:mx-2  h-16 text-right text-black">creating dream spaces</p>
+    <p class="my-6 text-5xl md:text-6xl lg:text-8xl font-bold mx-8 mx-sm-2 h-20 text-right text-[#fca311] italic">together</p>
   </div>
   <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 align-middle my-12">
     <div>
@@ -302,15 +302,15 @@
   <!--    2nd BLOCK END    -->
 
   <!--   CATEGORIES  START   -->
-  <div class="pt-4 pb-4 mt-16 pb-12  shadow-lg bg-white relative">
+  <div class="pt-4 pb-4 mt-16 pb-12  shadow-lg bg-white">
 
-      <h1 class="text-[140px] tracking-widest font-monospace bg-clip-text text-[#fca311] absolute left-3/4 transform -translate-x-1/2 my-4 text-right top-15 leading-none">OUR WORKS</h1>
+      <h1 class="lg:text-[140px] md:text-[90px] md:top-25 sm:text-[60px] md:top-35 tracking-widest font-monospace bg-clip-text text-[#fca311] absolute left-3/4 transform -translate-x-1/2 my-4 text-right top-15 leading-none">OUR WORKS</h1>
 <!--      <div class="absolute top-0 left-0 z-10">-->
 <!--        <p>This is some text that will appear above the background.</p>-->
 <!--      </div>-->
-<section class="py-2text-right grid md:grid-cols-2 lg:grid-cols-2 relative m-24 top-0 left-0 z-10">
+<section class="py-2 text-right grid md:grid-cols-2 lg:grid-cols-2 relative my-24 top-0 left-0 z-10">
       {{ range .Templates }}
-      <div class="flex justify-center items-center lg:mx-8 md:mx-4 sm:mx-20 h-64 md:h-92">
+      <div class="flex justify-center items-center lg:mx-8 md:mx-8 sm:mx-20 lg:h-92 md:h-92 sm:64">
         <div class="text-right">
           <h3 class="my-4 text-3xl font-bold font-monospace mx-4 text-right text-black">{{ .Specification }}</h3>
           <div class="">
@@ -346,7 +346,7 @@
   </div>
   <div class="text-center md:text-center lg:text-center mx-16">
     <a href="#download-div">
-      <button class="bg-white text-black lg:text-2xl md:text-xl sm:text-xl text-white my-1 py-6 px-32 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out"> Download App</button>
+      <button class="bg-white text-black lg:text-2xl md:text-xl sm:text-xl text-black my-1 py-6 px-32 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out"> Download App</button>
     </a>
   </div>
   </div>
