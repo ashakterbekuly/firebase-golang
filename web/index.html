@@ -3,7 +3,13 @@
 <head>
   <style>
     .gradient {
-      background: linear-gradient(#D2A244 0%, #e3b966 100%);
+      background: linear-gradient(#e5e5e5 0%, #ffffff 100%);
+    }
+    .primary{
+      color: #14213d;
+    }
+    .secondary{
+      text: #fca311;
     }
 
     .app-collage {
@@ -130,15 +136,15 @@
     });
   </script>
   <!--    SLIDER SCRIPT END    -->
-
 </head>
+
 <body class="leading-normal tracking-normal text-white gradient" style="font-family: 'Source Sans Pro', sans-serif;">
 
 <!--    NAV START     -->
-<nav id="header" class="fixed w-full z-30 top-0 text-white">
+<nav id="header" class="fixed w-full z-30 top-0 bg-[#14213d]">
   <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
     <div class="pl-4 flex items-center align-middle">
-      <a class="toggleColour align-middle text-black no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
+      <a class="toggleColour align-middle text-white no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
         <img src="/img/logo_archneo_black.png" alt="" class="w-12 inline-block align-middle">
         <div class="h-18 inline-block">ArchNEO</div>
       </a>
@@ -154,23 +160,23 @@
     <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
       <ul class="list-reset lg:flex justify-end flex-1 items-center">
         <li class="mr-3">
-          <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/">Home</a>
+          <a class="inline-block py-2 px-4 text-white text-lg hover:scale-105 duration-300 ease-in-out" href="/">Home</a>
         </li>
         <li class="mr-3">
-          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/events">Events</a>
+          <a class="inline-block text-white text-lg hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/events">Events</a>
         </li>
         <li class="mr-3">
-          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects">Projects</a>
+          <a class="inline-block text-white  text-lg  hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/projects">Projects</a>
         </li>
         {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a href="/login">
-            <button class="lg:mx-0 bg-gray-800 text-xl text-white rounded-xl my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
+            <button class="lg:mx-0 bg-transparent border text-xl text-white my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
           </a>
         </li>
         <li class="mr-3">
           <a href="/register/role">
-            <button class="lg:mx-0 bg-gray-200 text-xl text-gray-800 rounded-xl my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
+            <button class="lg:mx-0 bg-gray-200 text-xl text-gray-800 my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
           </a>
         </li>
         {{ else }}
@@ -228,15 +234,15 @@
   <!--    1st BLOCK START    -->
   <div class="container">
     <p class="my-4 text-4xl md:text-6xl lg:text-8xl font-monospace mx-4 h-16 text-right text-black">creating dream spaces</p>
-    <p class="my-4 text-4xl md:text-6xl lg:text-8xl font-bold mx-8 mx-sm-2 h-18 text-right text-black italic">together</p>
+    <p class="my-6 text-4xl md:text-6xl lg:text-8xl font-bold mx-8 mx-sm-2 h-20 text-right text-[#fca311] italic">together</p>
   </div>
-  <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 align-middle">
+  <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 align-middle my-12">
     <div>
     <p class="text-xl mx-6 ml-24 lg:w-full md:my-8 sm:my-8 lg:my-0 text-right text-black"> We help to find professionals in their field and help to acquire new knowledge and skills </p>
     </div>
     <div class="text-center md:text-right lg:text-center mx-8">
       <a href="#download-div">
-        <button class="bg-transparent border border-5 border-gray-800 hover:text-white hover:bg-gray-900 lg:text-2xl md:text-xl sm:text-xl text-gray-800 rounded-xl my-1 py-2 px-16 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out"> Download App </button>
+        <button class="bg-transparent border border-5 border-gray-800 hover:text-white hover:bg-[#14213d] lg:text-2xl md:text-xl sm:text-xl text-black my-1 py-2 px-16 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out"> Download App </button>
       </a>
     </div>
   </div>
@@ -247,14 +253,14 @@
     <div class="mx-3">
 
       <!--  SLIDER START    -->
-      <section class="flex flex-wrap py-4">
-        <div class="container mx-auto m-4 text-center bg-white rounded-3xl">
+      <section class="flex justify-center">
+        <div class="container w-2/3 m-4 rounded-lg shadow-xl bg-white">
           <div class="slider">
             {{ range .Events }}
-            <div class="">
-              <h3 class="text-3xl font-bold mt-8 text-black mb-2 mx-6">{{ .Title }}</h3>
-              <h4 class="text-2xl font-bold my-1 text-black mx-6">{{ .DateTimeFromString }}</h4>
-              <img src="{{ .ImageUrl }}" alt="project-1" class="mx-auto rounded-3xl object-fill w-auto h-3/4 px-8">
+            <div class="w-50">
+              <h3 class="text-4xl mt-8 text-black mb-2 mx-6 text-left">{{ .Title }}</h3>
+              <h4 class="text-xl my-1 text-black mx-6 text-right">{{ .DateTimeFromString }}</h4>
+              <img src="{{ .ImageUrl }}" alt="project-1" class="object-cover h-104 px-8">
             </div>
             {{ end }}
           </div>
@@ -295,38 +301,21 @@
 </div>
   <!--    2nd BLOCK END    -->
 
-  <!--   WAVE START   -->
-<div class="relative -mt-12 lg:-mt-24">
-  <svg viewBox="0 0 1428 174" version="1.1" xmlns="http://www.w3.org/2000/svg">
-    <g stroke="none" fill="none" fill-rule="evenodd">
-      <g transform="translate(-2.000000, 44.000000)" fill="#FFFFFF" fill-rule="nonzero">
-        <path d="M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496" opacity="0.100000001"></path>
-        <path d="M100,104.708498 C277.413333,72.2345949 426.147877,52.5246657 546.203633,45.5787101 C666.259389,38.6327546 810.524845,41.7979068 979,55.0741668 C931.069965,56.122511 810.303266,74.8455141 616.699903,111.243176 C423.096539,147.640838 250.863238,145.462612 100,104.708498 Z" opacity="0.100000001"></path>
-        <path d="M1046,51.6521276 C1130.83045,29.328812 1279.08318,17.607883 1439,40.1656806 L1439,120 C1271.17211,77.9435312 1140.17211,55.1609071 1046,51.6521276 Z" id="Path-4" opacity="0.200000003"></path>
-      </g>
-      <g transform="translate(-4.000000, 76.000000)" fill="#FFFFFF" fill-rule="nonzero">
-        <path d="M0.457,34.035 C57.086,53.198 98.208,65.809 123.822,71.865 C181.454,85.495 234.295,90.29 272.033,93.459 C311.355,96.759 396.635,95.801 461.025,91.663 C486.76,90.01 518.727,86.372 556.926,80.752 C595.747,74.596 622.372,70.008 636.799,66.991 C663.913,61.324 712.501,49.503 727.605,46.128 C780.47,34.317 818.839,22.532 856.324,15.904 C922.689,4.169 955.676,2.522 1011.185,0.432 C1060.705,1.477 1097.39,3.129 1121.236,5.387 C1161.703,9.219 1208.621,17.821 1235.4,22.304 C1285.855,30.748 1354.351,47.432 1440.886,72.354 L1441.191,104.352 L1.121,104.031 L0.457,34.035 Z"></path>
-      </g>
-    </g>
-  </svg>
-</div>
-  <!--   WAVE END   -->
-
   <!--   CATEGORIES  START   -->
+  <div class="pt-4 pb-4 mt-16 pb-12  shadow-lg bg-white relative">
 
-  <div class="pt-4 pb-4 bg-white">
-<!--    <div>-->
-<!--      <h2 class="my-2 text-4xl font-bold font-monospace mx-20 text-right text-black"> Templates </h2>-->
-<!--    </div>-->
-
-    <section class="py-2text-right grid md:grid-cols-2 lg:grid-cols-2 m-24">
+      <h1 class="text-[140px] tracking-widest font-monospace bg-clip-text text-[#fca311] absolute left-3/4 transform -translate-x-1/2 my-4 text-right top-15 leading-none">OUR WORKS</h1>
+<!--      <div class="absolute top-0 left-0 z-10">-->
+<!--        <p>This is some text that will appear above the background.</p>-->
+<!--      </div>-->
+<section class="py-2text-right grid md:grid-cols-2 lg:grid-cols-2 relative m-24 top-0 left-0 z-10">
       {{ range .Templates }}
-      <div class="flex justify-center items-center lg:mx-8 md:mx-4 sm:mx-20 h-72 md:h-96">
+      <div class="flex justify-center items-center lg:mx-8 md:mx-4 sm:mx-20 h-64 md:h-92">
         <div class="text-right">
           <h3 class="my-4 text-3xl font-bold font-monospace mx-4 text-right text-black">{{ .Specification }}</h3>
           <div class="">
             <a href="/template?spec={{ .Specification }}">
-              <img class="h-84 object-fill transform transition hover:scale-105 duration-300 ease-in-out focus:shadow-outline" src="{{ .ImageUrl }}" alt="...">
+              <img class="h-80 object-fill transform transition hover:scale-105 duration-300 ease-in-out focus:shadow-outline" src="{{ .ImageUrl }}" alt="...">
             </a>
           </div>
         </div>
@@ -338,31 +327,12 @@
   </div>
   <!--   CATEGORIES  END   -->
 
-<!--   WAVE START   -->
-<svg class="wave-top" viewBox="0 0 1439 147" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-    <g transform="translate(-1.000000, -14.000000)" fill-rule="nonzero">
-      <g class="wave" fill="#FFFFFF">
-        <path d="M1440,84 C1383.555,64.3 1342.555,51.3 1317,45 C1259.5,30.824 1206.707,25.526 1169,22 C1129.711,18.326 1044.426,18.475 980,22 C954.25,23.409 922.25,26.742 884,32 C845.122,37.787 818.455,42.121 804,45 C776.833,50.41 728.136,61.77 713,65 C660.023,76.309 621.544,87.729 584,94 C517.525,105.104 484.525,106.438 429,108 C379.49,106.484 342.823,104.484 319,102 C278.571,97.783 231.737,88.736 205,84 C154.629,75.076 86.296,57.743 0,32 L0,0 L1440,0 L1440,84 Z"></path>
-      </g>
-      <g transform="translate(1.000000, 15.000000)" fill="#FFFFFF">
-        <g transform="translate(719.500000, 68.500000) rotate(-180.000000) translate(-719.500000, -68.500000) ">
-          <path d="M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496" opacity="0.100000001"></path>
-          <path d="M100,104.708498 C277.413333,72.2345949 426.147877,52.5246657 546.203633,45.5787101 C666.259389,38.6327546 810.524845,41.7979068 979,55.0741668 C931.069965,56.122511 810.303266,74.8455141 616.699903,111.243176 C423.096539,147.640838 250.863238,145.462612 100,104.708498 Z" opacity="0.100000001"></path>
-          <path d="M1046,51.6521276 C1130.83045,29.328812 1279.08318,17.607883 1439,40.1656806 L1439,120 C1271.17211,77.9435312 1140.17211,55.1609071 1046,51.6521276 Z" opacity="0.200000003"></path>
-        </g>
-      </g>
-    </g>
-  </g>
-</svg>
-<section class="container mx-auto text-center py-6 mb-12">
-  <!--   WAVE END   -->
-
   <!--OUR APP BLOCK START-->
-  <h2 class="w-full my-2 text-5xl font-bold leading-tight text-center text-white" id="download-div"> Our app ArchNEO </h2>
-  <div class="w-full mb-4">
-    <div class="h-1 mx-auto bg-white w-1/6 opacity-25 my-0 py-0 rounded-t"></div>
-  </div>
+  <div class="grid grid-columns-4 py-6 bg-[#fca311]">
+    <div>
+    <h2 class="w-full text-7xl font-monospace leading-tight mx-8 text-white" id="download-div"> Our app ArchNEO </h2>
+    <h3 class="my-4 mx-8 text-3xl leading-tight text-black"> Join Us in our app and reach us even quicker </h3>
+    </div>
   <div class="app-collage">
     <div class="app-screen">
       <img src="img/Mockup.png" alt="App screen 1">
@@ -374,11 +344,12 @@
       <img src="img/Mockup3.png" alt="App screen 3">
     </div>
   </div>
-  <h3 class="my-4 text-3xl leading-tight"> Join Us in our app and reach us even quicker </h3>
-  <a href="/download">
-    <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Download App </button>
-  </a>
-</section>
+  <div class="text-center md:text-center lg:text-center mx-16">
+    <a href="#download-div">
+      <button class="bg-white text-black lg:text-2xl md:text-xl sm:text-xl text-white my-1 py-6 px-32 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out"> Download App</button>
+    </a>
+  </div>
+  </div>
   <!--    OUR APP BLOCK END    -->
 
 <!--    FOOTER START    -->
@@ -441,47 +412,47 @@
 -->
 
   <!--    BASIC SCRIPT START    -->
-<script>
-  var scrollpos = window.scrollY;
-  var header = document.getElementById("header");
-  var navcontent = document.getElementById("nav-content");
-  var navaction = document.getElementById("navAction");
-  var brandname = document.getElementById("brandname");
-  var toToggle = document.querySelectorAll(".toggleColour");
-  document.addEventListener("scroll", function() {
-    /*Apply classes for slide in bar*/
-    scrollpos = window.scrollY;
-    if (scrollpos > 10) {
-      header.classList.add("bg-white");
-      navaction.classList.remove("bg-white");
-      navaction.classList.add("gradient");
-      navaction.classList.remove("text-gray-800");
-      navaction.classList.add("text-white");
-      //Use to switch toggleColour colours
-      for (var i = 0; i < toToggle.length; i++) {
-        toToggle[i].classList.add("text-gray-800");
-        toToggle[i].classList.remove("text-white");
-      }
-      header.classList.add("shadow");
-      navcontent.classList.remove("bg-gray-100");
-      navcontent.classList.add("bg-white");
-    } else {
-      header.classList.remove("bg-white");
-      navaction.classList.remove("gradient");
-      navaction.classList.add("bg-white");
-      navaction.classList.remove("text-white");
-      navaction.classList.add("text-gray-800");
-      //Use to switch toggleColour colours
-      for (var i = 0; i < toToggle.length; i++) {
-        toToggle[i].classList.add("text-white");
-        toToggle[i].classList.remove("text-gray-800");
-      }
-      header.classList.remove("shadow");
-      navcontent.classList.remove("bg-white");
-      navcontent.classList.add("bg-gray-100");
-    }
-  });
-</script>
+<!--<script>-->
+<!--  var scrollpos = window.scrollY;-->
+<!--  var header = document.getElementById("header");-->
+<!--  var navcontent = document.getElementById("nav-content");-->
+<!--  var navaction = document.getElementById("navAction");-->
+<!--  var brandname = document.getElementById("brandname");-->
+<!--  var toToggle = document.querySelectorAll(".toggleColour");-->
+<!--  document.addEventListener("scroll", function() {-->
+<!--    /*Apply classes for slide in bar*/-->
+<!--    scrollpos = window.scrollY;-->
+<!--    if (scrollpos > 10) {-->
+<!--      header.classList.add("bg-white");-->
+<!--      navaction.classList.remove("bg-white");-->
+<!--      navaction.classList.add("gradient");-->
+<!--      navaction.classList.remove("text-gray-800");-->
+<!--      navaction.classList.add("text-white");-->
+<!--      //Use to switch toggleColour colours-->
+<!--      for (var i = 0; i < toToggle.length; i++) {-->
+<!--        toToggle[i].classList.add("text-gray-800");-->
+<!--        toToggle[i].classList.remove("text-white");-->
+<!--      }-->
+<!--      header.classList.add("shadow");-->
+<!--      navcontent.classList.remove("bg-gray-100");-->
+<!--      navcontent.classList.add("bg-white");-->
+<!--    } else {-->
+<!--      header.classList.remove("bg-white");-->
+<!--      navaction.classList.remove("gradient");-->
+<!--      navaction.classList.add("bg-white");-->
+<!--      navaction.classList.remove("text-white");-->
+<!--      navaction.classList.add("text-gray-800");-->
+<!--      //Use to switch toggleColour colours-->
+<!--      for (var i = 0; i < toToggle.length; i++) {-->
+<!--        toToggle[i].classList.add("text-white");-->
+<!--        toToggle[i].classList.remove("text-gray-800");-->
+<!--      }-->
+<!--      header.classList.remove("shadow");-->
+<!--      navcontent.classList.remove("bg-white");-->
+<!--      navcontent.classList.add("bg-gray-100");-->
+<!--    }-->
+<!--  });-->
+<!--</script>-->
 
 <script>
   /*Toggle dropdown list*/
@@ -520,7 +491,7 @@
   }
 </script>
   <!--    BASIC SCRIPT END    -->
-
+</div>
   <!--    MAIN BLOCK END    -->
 </body>
 </html>
