@@ -10,36 +10,58 @@
     <!-- Bootstrap CSS-->
     <link href="css/bootstrap.min.css" rel="stylesheet" />
     <!-- Main CSS  -->
+
+
+    <link rel="stylesheet" href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
+    <!-- Define your gradient here - use online tools to find a gradient matching your branding-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
     <link rel="stylesheet" href="css/main.css" />
+    <style>
+      .gradient {
+        background: linear-gradient(#14213d 0%, #e5e5e5 100%);
+      }
+    </style>
   </head>
-  <body>
-    <div class="container">
+  <body class="gradient">
+    <div class="">
       <div class="row">
-        <div class="col-12 d-flex justify-content-center">
+        <div class="col-12 d-flex justify-content-center align-middle">
           <form action="/login" method="POST">
             <div
-                    class="card shadow-lg p-3 mb-5 bg-body "
+                    class="card shadow-lg p-3 mb-12 bg-body "
                     style="width: 40rem"
             >
               <img
-                      src="img/logo.png"
+                      src="img/logo_archneo_black.png"
                       class="align-self-center card-img-top"
                       alt="archneo_Logo"
               />
               <!-- Sign UP -->
-              <p class="h1 align-self-center">Log In</p>
+              <p class="mt-4 text-3xl text-center md:text-5xl lg:text-7xl lg:mx-4 md:mx-2 sm:mx-2  h-16 text-black">Welcome Back!</p>
               <!-- Inputs -->
 
               <!-- Email -->
               <label class="mt-3" for="Input_Email">Email</label>
-              <input type="email" class="form-control" name="email" id="Input_Email" placeholder="e.g. johndoe123@gmail.com">
+              <input type="email" class="form-control rounded border-dark" name="email" id="Input_Email" placeholder="e.g. johndoe123@gmail.com">
               <!-- Password -->
               <label class="mt-3" for="Input_Password">Password</label>
-              <input type="password" class="form-control" name="password" id="Input_Password" placeholder="Min. 8 characters">
+              <input type="password" class="form-control rounded border-dark" name="password" id="Input_Password" placeholder="Min. 8 characters">
 
               <!-- Confirm btn -->
-              <div class="col-12">
-                <button class="btn mt-3" type="submit">Confirm</button>
+              <div class="text-center md:text-center lg:text-center mx-16 mt-8">
+                <a href="#download-div">
+                  <button class="bg-[#fca311] text-black lg:text-2xl md:text-xl sm:text-xl text-black my-1 py-2 px-44 focus:outline-none transform transition hover:scale-105 duration-300 ease-in-out">Log In</button>
+                </a>
               </div>
 
               <p class="text-center text-muted mt-3 mb-0">Don't have an account? <a href="/register/role"
