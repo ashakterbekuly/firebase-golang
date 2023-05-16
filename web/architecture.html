@@ -98,92 +98,75 @@
     }
   </style>
 </head>
-<body class="antialiased text-gray-900 leading-normal tracking-wider bg-cover bg-center" style="background-image:url('https://images.pexels.com/photos/157811/pexels-photo-157811.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2'); font-family: 'Source Sans Pro', sans-serif;">
-<!--Nav-->
-<!--#include file="./header.html" -->
-<nav id="header" class="fixed w-full z-30 top-0 text-white">
+<body class=" text-gray-900 leading-normal bg-[#e5e5e5]">
+
+<!--    NAV START     -->
+<nav id="header" class="fixed w-full z-30 top-0 bg-[#14213d]">
   <div class="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
     <div class="pl-4 flex items-center align-middle">
-      <a class="toggleColour align-middle text-black no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
+      <a class="toggleColour align-middle text-white no-underline hover:no-underline font-bold lg:text-4xl inline-block" href="#">
         <img src="/img/logo_archneo_black.png" alt="" class="w-12 inline-block align-middle">
-        <div class="h-22 inline-block">ArchNEO</div>
+        <div class="h-18 inline-block">ArchNEO</div>
       </a>
     </div>
     <div class="block lg:hidden pr-4">
-      <button id="nav-toggle" class="flex items-center p-1 text-pink-800 hover:text-gray-900 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+      <button id="nav-toggle" class="flex items-center p-1 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
         <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <title>Menu</title>
           <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
         </svg>
       </button>
     </div>
-    <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
+    <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-[#14213d] lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
       <ul class="list-reset lg:flex justify-end flex-1 items-center">
+        <li class="mr-3">
+          <a class="inline-block py-2 px-4 text-white text-lg hover:scale-105 duration-300 ease-in-out" href="/">Home</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-white text-lg hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/events">Events</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-white  text-lg  hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/projects">Projects</a>
+        </li>
         {{ if .IsNonAuthenticated }}
         <li class="mr-3">
-          <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/">Home</a>
-        </li>
-        <li class="mr-3">
-          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/events">Events</a>
-        </li>
-        <li class="mr-3">
-          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects">Projects</a>
-        </li>
-        <li class="mr-3">
           <a href="/login">
-            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
+            <button class="lg:mx-0 bg-transparent border text-xl text-white my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
           </a>
         </li>
         <li class="mr-3">
           <a href="/register/role">
-            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-gray-800 rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
+            <button class="lg:mx-0 bg-gray-200 text-xl text-gray-800 my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Register </button>
           </a>
-        </li>
-        <li>
-          <div class="relative">
-            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">
-              eng
-            </button>
-            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">
-              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>
-              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>
-              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>
-            </div>
-          </div>
         </li>
         {{ else }}
         <li class="mr-3">
-          <a class="inline-block py-2 px-4 text-black font-bold text-lg no-underline" href="/?uid={{ .ID }}">Home</a>
-        </li>
-        <li class="mr-3">
-          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/events?uid={{ .ID }}">Events</a>
-        </li>
-        <li class="mr-3">
-          <a class="inline-block text-black text-lg no-underline hover:text-gray-800 hover:text-underline py-2 px-4" href="/projects?uid={{ .ID }}">Projects</a>
-        </li>
-        <li class="mr-3">
           <div class="relative">
-            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
+            <button class="lg:mx-0 bg-transparent border text-xl text-white my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
               {{ .Username }}
             </button>
-            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-profile">
-              <a href="/profile?uid={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
+            <div class="right-0 py-2 w-48 bg-white shadow-xl z-20 hidden" id="menu-dropdown-profile">
+              <a href="/profile?id={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
               <a href="/logout" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Sign out</a>
             </div>
           </div>
         </li>
-        <li>
-          <div class="relative">
-            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">
-              eng
-            </button>
-            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">
-              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>
-              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>
-              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>
-            </div>
-          </div>
-        </li>
+
+        <!-- Localization Button – temporarily removed -->
+
+        <!--        <li>-->
+        <!--          <div class="relative">-->
+        <!--            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">-->
+        <!--              eng-->
+        <!--            </button>-->
+        <!--            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">-->
+        <!--              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>-->
+        <!--              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>-->
+        <!--              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>-->
+        <!--            </div>-->
+        <!--          </div>-->
+        <!--        </li>-->
+
         {{ end }}
 
         <script>
@@ -207,81 +190,96 @@
   </div>
   <hr class="border-b border-gray-100 opacity-25 my-0 py-0" />
 </nav>
+<!--    NAV END     -->
 
-<div class="max-w-4xl flex items-center h-auto lg:h-screen flex-wrap mx-auto my-4 lg:my-0">
+<div class="max-w-5xl flex items-center lg:h-screen mx-auto mt-16 lg:my-0">
   <!--Main Col-->
-  <div id="profile" class="w-full lg:w-3/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white mx-6 lg:mx-0">
+  <div id="profile" class="w-full lg:w-4/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white mx-6 lg:mx-0">
     <div class="p-4 md:p-16 text-center lg:text-left">
       <!-- Image for mobile view-->
-      <div class="block lg:hidden rounded-full shadow-xl mx-auto -mt-16 h-48 w-60 bg-cover bg-center" style="background-image: url('https://source.unsplash.com/MP0IUfwrn0A')"></div>
-      <h1 class="text-3xl font-bold pt-8 lg:pt-0">{{ .Username }}</h1>
+      <div class="block lg:hidden shadow-xl mx-auto -mt-8 h-48 w-60 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60')"></div>
+      <h1 class="text-3xl font-bold pt-8 lg:pt-0">
+        Alex Halper
+        {{ .Username }}
+      </h1>
       <div class="mx-auto lg:mx-0 w-4/5 pt-3 border-b-2 border-black opacity-25"></div>
       <p class="pt-4 text-xl font-bold flex items-center justify-center lg:justify-start">
         <svg class="h-4 fill-current text-black pr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M9 12H1v6a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-6h-8v2H9v-2zm0-1H0V5c0-1.1.9-2 2-2h4V2a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v1h4a2 2 0 0 1 2 2v6h-9V9H9v2zm3-8V2H8v1h4z" />
         </svg> {{ .Specialization }}
+        Interior Design
       </p>
       <p class="pt-2 text-gray-600 text-xs lg:text-xl flex items-center justify-center lg:justify-start">
         <svg class="h-4 fill-current text-black pr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
           <path d="M10 20a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm7.75-8a8.01 8.01 0 0 0 0-4h-3.82a28.81 28.81 0 0 1 0 4h3.82zm-.82 2h-3.22a14.44 14.44 0 0 1-.95 3.51A8.03 8.03 0 0 0 16.93 14zm-8.85-2h3.84a24.61 24.61 0 0 0 0-4H8.08a24.61 24.61 0 0 0 0 4zm.25 2c.41 2.4 1.13 4 1.67 4s1.26-1.6 1.67-4H8.33zm-6.08-2h3.82a28.81 28.81 0 0 1 0-4H2.25a8.01 8.01 0 0 0 0 4zm.82 2a8.03 8.03 0 0 0 4.17 3.51c-.42-.96-.74-2.16-.95-3.51H3.07zm13.86-8a8.03 8.03 0 0 0-4.17-3.51c.42.96.74 2.16.95 3.51h3.22zm-8.6 0h3.34c-.41-2.4-1.13-4-1.67-4S8.74 3.6 8.33 6zM3.07 6h3.22c.2-1.35.53-2.55.95-3.51A8.03 8.03 0 0 0 3.07 6z" />
         </svg> {{ .Portfolio }}
+        https://alexhalper_portflio.behance.net/
       </p>
       <p class="pt-8 text-sm">{{ .Bio }}</p>
       <div class="pt-12 pb-8">
-        <button class="gradient hover:bg-black text-white font-bold py-2 px-4 rounded-full more-info" onclick="openModal()"> Edit Info </button>
+        <button class="bg-[#fca311] hover:bg-black text-white font-bold py-2 px-8 more-info" onclick="openModal()"> Edit Info </button>
       </div>
-      <!-- <button class="bg-gray-100 hover:bg-gray-200 hover:text-black px-12 py-2 py-1 rounded-full text-black text-xl mt-8 more-info" onclick="openModal()">More Info</button> -->
+
+
       <div id="myModal" class="modal">
         <!-- Modal content -->
         <div class="modal-content ">
           <span class="close" onclick="closeModal()">&times;</span>
           <div class="image-container">
-            <img src="{{ .PhotoUrl }}" alt="Image" class="max-w-sm mx-auto" />
+            <img src="
+            https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60
+            {{ .PhotoUrl }}
+" alt="Image" class="max-w-sm mx-auto" />
           </div>
-          <h1 class="my-4 text-xl font-bold leading-tight text-black">Editing Info</h1>
           <form action="/edit-architect?uid={{ .ID }}" method="POST" enctype="multipart/form-data">
             <label class="block mx-auto my-4">
               <span class="sr-only">Choose profile photo</span>
               <input type="file" name="photo" class="block w-full text-sm text-slate-500
                     file:mr-4 file:py-2 file:px-4
-                    file:rounded-full file:border-0
+                    file: file:border-0
                     file:text-sm file:font-semibold
-                    file:bg-violet-50 file:text-violet-700
+                    file:file:text-violet-700
                     hover:file:bg-violet-100
                     file:border-solid
                   " />
             </label>
             <div>
-              <label for="first_name" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Name</label>
-              <input type="text" name="name" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ .Username }}">
+              <label for="first_name" class="block mt-2 text-sm font-medium text-gray-900">Name</label>
+              <input type="text" name="name" id="first_name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="{{ .Username }}">
             </div>
             <div>
-              <label for="bio" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Bio</label>
-              <input type="text" name="bio" id="bio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ .Bio }}">
+              <label for="bio" class="block mt-2 text-sm font-medium text-gray-900">Bio</label>
+              <input type="text" name="bio" id="bio" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="{{ .Bio }}">
             </div>
             <div>
-              <label for="spec" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Specialization</label>
-              <input type="text" name="specialization" id="spec" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ .Specialization }}">
+              <label for="spec" class="block mt-2 text-sm font-medium text-gray-900">Specialization</label>
+              <input type="text" name="specialization" id="spec" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 " value="{{ .Specialization }}">
             </div>
             <div>
-              <label for="email" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
-              <input type="email" name="new-email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ .Email }}">
+              <label for="email" class="block mt-2 text-sm font-medium text-gray-900">Email</label>
+              <input type="email" name="new-email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="{{ .Email }}">
             </div>
             <div>
-              <label for="website" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Portfolio</label>
-              <input type="url" name="portfolio" id="website" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ .Portfolio }}">
+              <label for="website" class="block mt-2 text-sm font-medium text-gray-900">Portfolio</label>
+              <input type="url" name="portfolio" id="website" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" value="{{ .Portfolio }}">
             </div>
             <div class="mb-6">
-              <label for="password" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-              <input type="password" name="current-password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••" required>
+              <label for="password" class="block mt-2 text-sm font-medium text-gray-900">Password</label>
+              <input type="password" name="current-password" id="password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="•••••••••" required>
             </div>
             <div class="mb-6">
-              <label for="confirm_password" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">New password</label>
-              <input type="password" name="new-password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="•••••••••">
+              <label for="confirm_password" class="block mt-2 text-sm font-medium text-gray-900">New password</label>
+              <input type="password" name="new-password" id="confirm_password" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" placeholder="•••••••••">
             </div>
+
+<!--            <div>-->
+<!--              <label for="email" class="block mt-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>-->
+<!--              <input type="email" name="new-email" id="email" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="{{ .Email }}">-->
+<!--            </div>-->
+
             <div class="flex justify-end">
-              <button onclick="closeModal()" class="hover:underline bg-gray-200 text-xl text-gray-800 rounded-full my-4 py-2 px-16">Cancel</button>
-              <button type="submit" class="hover:underline gradient text-xl text-white rounded-full my-4 mx-2 py-2 px-16">Save</button>
+              <button onclick="closeModal()" class="hover:underline bg-gray-200 text-xl text-gray-800 my-4 py-2 px-16">Cancel</button>
+              <button type="submit" class="hover:underline bg-[#fca311] text-xl text-white my-4 mx-2 py-2 px-16">Save</button>
             </div>
           </form>
         </div>
@@ -350,15 +348,20 @@
   <!--Img Col-->
   <div class="w-full lg:w-2/5">
     <!-- Big profile image for side bar (desktop) -->
-    <img src="{{ .PhotoUrl }}" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
+    <img src="
+    https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60
+    {{ .PhotoUrl }}
+" class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
   </div>
+
   <!-- Pin to top right corner -->
   <div class="absolute top-0 right-0 h-12 w-18 p-4"></div>
 </div>
 
 <!--<section class="border-b py-8">-->
-<div class="container max-w-4xl mx-auto m-8">
+<div class="container max-w-4xl mx-auto mb-16 ">
   <!--    IF IT IS A SPECIALIST _ HE CAN VIEW HIS/HER PROJECTS     -->
+  <!--  Сортируется по дате, последний добавленный проект, отображается сверху, самый первый, соотвественно внизу  -->
 
   <div class="container max-w-4xl mx-auto m-8 bg-white py-4">
   <h2 class="w-full mb-4 text-4xl font-bold text-center text-black"> My Projects </h2>
@@ -376,7 +379,7 @@
 
       <!--    При нажатии на кнопку "edit" проекта - должна открываться модалка с инфой и о проекте    -->
       <div class="py-4 w-3/4 max-w-sm rounded overflow-hidden">
-        <button class="gradient hover:bg-black text-white font-bold py-2 px-8 rounded-full more-info" onclick="openModal()"> Edit </button>
+        <button class="bg-[#fca311] hover:bg-black text-white font-bold py-2 px-8 more-info" onclick="openModal()"> Edit </button>
       </div>
     </div>
 
@@ -390,12 +393,12 @@
 <!--</section>-->
 
 
-<div class="flex justify-center">
+<div class="flex justify-center mb-12 ">
   <div class="max-w-sm rounded px-8 overflow-hidden shadow-lg mx-16 bg-white">
     <div class="px-6 py-4">
       <div class="font-bold text-xl my-8 text-center">View works of specialists here!</div>
       <a class="looking-for-specialist" href="projects.html">
-        <button class="hover:underline bg-gray-800 text-xl text-white rounded-full my-8 py-2 px-16">See the projects</button>
+        <button class="hover:underline bg-[#fca311] text-xl text-white my-4 py-2 px-16">See the projects</button>
       </a>
     </div>
   </div>
@@ -403,29 +406,12 @@
     <div class="px-6 py-4">
       <div class="font-bold text-xl my-8 text-center">Don't miss the upcoming events!</div>
       <a class="looking-for-specialist" href="projects.html">
-        <button class="hover:underline bg-gray-800 text-xl text-white rounded-full my-8 py-2 px-16">See the events</button>
+        <button class="hover:underline bg-[#fca311] text-xl text-white my-4 py-2 px-16">See the events</button>
       </a>
     </div>
   </div>
 </div>
 
-<!-- Change the colour #f8fafc to match the previous section colour -->
-<svg class="wave-top" viewBox="0 0 1439 147" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
-  <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-    <g transform="translate(-1.000000, -14.000000)" fill-rule="nonzero">
-      <g class="wave">
-        <path d="M1440,84 C1383.555,64.3 1342.555,51.3 1317,45 C1259.5,30.824 1206.707,25.526 1169,22 C1129.711,18.326 1044.426,18.475 980,22 C954.25,23.409 922.25,26.742 884,32 C845.122,37.787 818.455,42.121 804,45 C776.833,50.41 728.136,61.77 713,65 C660.023,76.309 621.544,87.729 584,94 C517.525,105.104 484.525,106.438 429,108 C379.49,106.484 342.823,104.484 319,102 C278.571,97.783 231.737,88.736 205,84 C154.629,75.076 86.296,57.743 0,32 L0,0 L1440,0 L1440,84 Z"></path>
-      </g>
-      <g transform="translate(1.000000, 15.000000)" fill="#FFFFFF">
-        <g transform="translate(719.500000, 68.500000) rotate(-180.000000) translate(-719.500000, -68.500000) ">
-          <path d="M0,0 C90.7283404,0.927527913 147.912752,27.187927 291.910178,59.9119003 C387.908462,81.7278826 543.605069,89.334785 759,82.7326078 C469.336065,156.254352 216.336065,153.6679 0,74.9732496" opacity="0.100000001"></path>
-          <path d="M100,104.708498 C277.413333,72.2345949 426.147877,52.5246657 546.203633,45.5787101 C666.259389,38.6327546 810.524845,41.7979068 979,55.0741668 C931.069965,56.122511 810.303266,74.8455141 616.699903,111.243176 C423.096539,147.640838 250.863238,145.462612 100,104.708498 Z" opacity="0.100000001"></path>
-          <path d="M1046,51.6521276 C1130.83045,29.328812 1279.08318,17.607883 1439,40.1656806 L1439,120 C1271.17211,77.9435312 1140.17211,55.1609071 1046,51.6521276 Z" opacity="0.200000003"></path>
-        </g>
-      </g>
-    </g>
-  </g>
-</svg>
 <!--Footer-->
 <footer class="bg-white">
   <div class="container mx-auto px-8">
@@ -494,83 +480,83 @@
 <!-- jQuery if you need it
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 -->
-<script>
-  var scrollpos = window.scrollY;
-  var header = document.getElementById("header");
-  var navcontent = document.getElementById("nav-content");
-  var navaction = document.getElementById("navAction");
-  var brandname = document.getElementById("brandname");
-  var toToggle = document.querySelectorAll(".toggleColour");
-  document.addEventListener("scroll", function() {
-    /*Apply classes for slide in bar*/
-    scrollpos = window.scrollY;
-    if (scrollpos > 10) {
-      header.classList.add("bg-white");
-      navaction.classList.remove("bg-white");
-      navaction.classList.add("gradient");
-      navaction.classList.remove("text-gray-800");
-      navaction.classList.add("text-white");
-      //Use to switch toggleColour colours
-      for (var i = 0; i < toToggle.length; i++) {
-        toToggle[i].classList.add("text-gray-800");
-        toToggle[i].classList.remove("text-white");
-      }
-      header.classList.add("shadow");
-      navcontent.classList.remove("bg-gray-100");
-      navcontent.classList.add("bg-white");
-    } else {
-      // header.classList.remove("bg-white");
-      navaction.classList.remove("gradient");
-      navaction.classList.add("bg-white");
-      navaction.classList.remove("text-white");
-      navaction.classList.add("text-gray-800");
-      //Use to switch toggleColour colours
-      for (var i = 0; i < toToggle.length; i++) {
-        toToggle[i].classList.add("text-white");
-        toToggle[i].classList.remove("text-gray-800");
-      }
-      header.classList.remove("shadow");
-      navcontent.classList.remove("bg-white");
-      navcontent.classList.add("bg-gray-100");
-    }
-  });
-</script>
-<script>
-  /*Toggle dropdown list*/
-  /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
-  var navMenuDiv = document.getElementById("nav-content");
-  var navMenu = document.getElementById("nav-toggle");
-  document.onclick = check;
+<!--<script>-->
+<!--  var scrollpos = window.scrollY;-->
+<!--  var header = document.getElementById("header");-->
+<!--  var navcontent = document.getElementById("nav-content");-->
+<!--  var navaction = document.getElementById("navAction");-->
+<!--  var brandname = document.getElementById("brandname");-->
+<!--  var toToggle = document.querySelectorAll(".toggleColour");-->
+<!--  document.addEventListener("scroll", function() {-->
+<!--    /*Apply classes for slide in bar*/-->
+<!--    scrollpos = window.scrollY;-->
+<!--    if (scrollpos > 10) {-->
+<!--      header.classList.add("bg-white");-->
+<!--      navaction.classList.remove("bg-white");-->
+<!--      navaction.classList.add("gradient");-->
+<!--      navaction.classList.remove("text-gray-800");-->
+<!--      navaction.classList.add("text-white");-->
+<!--      //Use to switch toggleColour colours-->
+<!--      for (var i = 0; i < toToggle.length; i++) {-->
+<!--        toToggle[i].classList.add("text-gray-800");-->
+<!--        toToggle[i].classList.remove("text-white");-->
+<!--      }-->
+<!--      header.classList.add("shadow");-->
+<!--      navcontent.classList.remove("bg-gray-100");-->
+<!--      navcontent.classList.add("bg-white");-->
+<!--    } else {-->
+<!--      // header.classList.remove("bg-white");-->
+<!--      navaction.classList.remove("gradient");-->
+<!--      navaction.classList.add("bg-white");-->
+<!--      navaction.classList.remove("text-white");-->
+<!--      navaction.classList.add("text-gray-800");-->
+<!--      //Use to switch toggleColour colours-->
+<!--      for (var i = 0; i < toToggle.length; i++) {-->
+<!--        toToggle[i].classList.add("text-white");-->
+<!--        toToggle[i].classList.remove("text-gray-800");-->
+<!--      }-->
+<!--      header.classList.remove("shadow");-->
+<!--      navcontent.classList.remove("bg-white");-->
+<!--      navcontent.classList.add("bg-gray-100");-->
+<!--    }-->
+<!--  });-->
+<!--</script>-->
+<!--<script>-->
+<!--  /*Toggle dropdown list*/-->
+<!--  /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/-->
+<!--  var navMenuDiv = document.getElementById("nav-content");-->
+<!--  var navMenu = document.getElementById("nav-toggle");-->
+<!--  document.onclick = check;-->
 
-  function check(e) {
-    var target = (e && e.target) || (event && event.srcElement);
-    //Nav Menu
-    if (!checkParent(target, navMenuDiv)) {
-      // click NOT on the menu
-      if (checkParent(target, navMenu)) {
-        // click on the link
-        if (navMenuDiv.classList.contains("hidden")) {
-          navMenuDiv.classList.remove("hidden");
-        } else {
-          navMenuDiv.classList.add("hidden");
-        }
-      } else {
-        // click both outside link and outside menu, hide menu
-        navMenuDiv.classList.add("hidden");
-      }
-    }
-  }
+<!--  function check(e) {-->
+<!--    var target = (e && e.target) || (event && event.srcElement);-->
+<!--    //Nav Menu-->
+<!--    if (!checkParent(target, navMenuDiv)) {-->
+<!--      // click NOT on the menu-->
+<!--      if (checkParent(target, navMenu)) {-->
+<!--        // click on the link-->
+<!--        if (navMenuDiv.classList.contains("hidden")) {-->
+<!--          navMenuDiv.classList.remove("hidden");-->
+<!--        } else {-->
+<!--          navMenuDiv.classList.add("hidden");-->
+<!--        }-->
+<!--      } else {-->
+<!--        // click both outside link and outside menu, hide menu-->
+<!--        navMenuDiv.classList.add("hidden");-->
+<!--      }-->
+<!--    }-->
+<!--  }-->
 
-  function checkParent(t, elm) {
-    while (t.parentNode) {
-      if (t == elm) {
-        return true;
-      }
-      t = t.parentNode;
-    }
-    return false;
-  }
-</script>
+<!--  function checkParent(t, elm) {-->
+<!--    while (t.parentNode) {-->
+<!--      if (t == elm) {-->
+<!--        return true;-->
+<!--      }-->
+<!--      t = t.parentNode;-->
+<!--    }-->
+<!--    return false;-->
+<!--  }-->
+<!--</script>-->
 <script src="https://unpkg.com/popper.js@1/dist/umd/popper.min.js"></script>
 <script src="https://unpkg.com/tippy.js@4"></script>
 <script>

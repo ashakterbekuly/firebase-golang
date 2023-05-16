@@ -150,14 +150,14 @@
       </a>
     </div>
     <div class="block lg:hidden pr-4">
-      <button id="nav-toggle" class="flex items-center p-1 hover:text-white focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
+      <button id="nav-toggle" class="flex items-center p-1 focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out">
         <svg class="fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <title>Menu</title>
           <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
         </svg>
       </button>
     </div>
-    <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-white lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
+    <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-[#14213d] lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
       <ul class="list-reset lg:flex justify-end flex-1 items-center">
         <li class="mr-3">
           <a class="inline-block py-2 px-4 text-white text-lg hover:scale-105 duration-300 ease-in-out" href="/">Home</a>
@@ -182,27 +182,31 @@
         {{ else }}
         <li class="mr-3">
           <div class="relative">
-            <button class="lg:mx-0 hover:underline bg-gray-800 text-xl text-white rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
+            <button class="lg:mx-0 bg-transparent border text-xl text-white my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
               {{ .Username }}
             </button>
-            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-profile">
+            <div class="right-0 py-2 w-48 bg-white shadow-xl z-20 hidden" id="menu-dropdown-profile">
               <a href="/profile?id={{ .ID }}" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Profile</a>
               <a href="/logout" class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">Sign out</a>
             </div>
           </div>
         </li>
-        <li>
-          <div class="relative">
-            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">
-              eng
-            </button>
-            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">
-              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>
-              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>
-              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>
-            </div>
-          </div>
-        </li>
+
+        <!-- Localization Button – temporarily removed -->
+
+<!--        <li>-->
+<!--          <div class="relative">-->
+<!--            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">-->
+<!--              eng-->
+<!--            </button>-->
+<!--            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">-->
+<!--              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>-->
+<!--              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>-->
+<!--              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>-->
+<!--            </div>-->
+<!--          </div>-->
+<!--        </li>-->
+
         {{ end }}
 
         <script>
@@ -330,7 +334,7 @@
   <!--OUR APP BLOCK START-->
   <div class="grid grid-columns-4 py-6 bg-[#fca311]">
     <div>
-    <h2 class="w-full text-7xl font-monospace leading-tight mx-8 text-white" id="download-div"> Our app ArchNEO </h2>
+    <h2 class="w-full text-7xl font-monospace leading-tight mx-8 text-white" id="download-div">ArchNEO Mobile App</h2>
     <h3 class="my-4 mx-8 text-3xl leading-tight text-black"> Join Us in our app and reach us even quicker </h3>
     </div>
   <div class="app-collage">
