@@ -119,6 +119,7 @@
     </div>
     <div class="w-full flex-grow lg:flex lg:items-center lg:w-auto hidden mt-2 lg:mt-0 bg-[#14213d] lg:bg-transparent text-black p-4 lg:p-0 z-20" id="nav-content">
       <ul class="list-reset lg:flex justify-end flex-1 items-center">
+        {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a class="inline-block py-2 px-4 text-white text-lg hover:scale-105 duration-300 ease-in-out" href="/">Home</a>
         </li>
@@ -128,7 +129,6 @@
         <li class="mr-3">
           <a class="inline-block text-white  text-lg  hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/projects">Projects</a>
         </li>
-        {{ if .IsNonAuthenticated }}
         <li class="mr-3">
           <a href="/login">
             <button class="lg:mx-0 bg-transparent border text-xl text-white my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out"> Log In </button>
@@ -141,6 +141,15 @@
         </li>
         {{ else }}
         <li class="mr-3">
+          <a class="inline-block py-2 px-4 text-white text-lg hover:scale-105 duration-300 ease-in-out" href="/?uid={{ .ID }}">Home</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-white text-lg hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/events?uid={{ .ID }}">Events</a>
+        </li>
+        <li class="mr-3">
+          <a class="inline-block text-white  text-lg  hover:scale-105 duration-300 ease-in-out py-2 px-4" href="/projects?uid={{ .ID }}">Projects</a>
+        </li>
+        <li class="mr-3">
           <div class="relative">
             <button class="lg:mx-0 bg-transparent border text-xl text-white my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-profile">
               {{ .Username }}
@@ -151,22 +160,6 @@
             </div>
           </div>
         </li>
-
-        <!-- Localization Button – temporarily removed -->
-
-        <!--        <li>-->
-        <!--          <div class="relative">-->
-        <!--            <button class="lg:mx-0 hover:underline bg-gray-200 text-xl text-black rounded-full my-4 py-2 px-8 shadow-lg focus:outline-none focus:shadow-outline transform transition hover:scale-105 duration-300 ease-in-out" id="menu-button-locale">-->
-        <!--              eng-->
-        <!--            </button>-->
-        <!--            <div class="absolute right-0 mt-2 py-2 w-48 bg-white rounded-md shadow-xl z-20 hidden" id="menu-dropdown-locale">-->
-        <!--              <button class="block px-4 py-2 text-gray-800 hover:text-black hover:font-bold">eng</button>-->
-        <!--              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">kaz</button>-->
-        <!--              <button class="block px-4 py-2 text-gray-800  hover:text-black hover:font-bold">rus</button>-->
-        <!--            </div>-->
-        <!--          </div>-->
-        <!--        </li>-->
-
         {{ end }}
 
         <script>
@@ -197,7 +190,7 @@
   <div id="profile" class="w-full lg:w-4/5 rounded-lg lg:rounded-l-lg lg:rounded-r-none shadow-2xl bg-white mx-6 lg:mx-0">
     <div class="p-4 md:p-16 text-center lg:text-left">
       <!-- Image for mobile view-->
-      <div class="block lg:hidden shadow-xl mx-auto -mt-8 h-48 w-60 bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60')"></div>
+      <div class="block lg:hidden shadow-xl mx-auto -mt-8 h-48 w-60 bg-cover bg-center" style="background-image: url('{{ .PhotoUrl }}')"></div>
       <h1 class="text-3xl font-bold pt-8 lg:pt-0">
         {{ .Username }}
       </h1>
@@ -343,7 +336,6 @@
   <div class="w-full lg:w-2/5">
     <!-- Big profile image for side bar (desktop) -->
     <img src="
-    https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NXx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=900&q=60
     {{ .PhotoUrl }}
 " class="rounded-none lg:rounded-lg shadow-2xl hidden lg:block">
   </div>
