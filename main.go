@@ -6,8 +6,6 @@ import (
 	"firebase-golang/api/edit_profile"
 	"firebase-golang/database"
 	"firebase-golang/firebase_auth"
-	"github.com/gin-contrib/sessions"
-	"github.com/gin-contrib/sessions/cookie"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
@@ -20,10 +18,6 @@ func main() {
 
 	// initialize new gin engine (for server)
 	r := gin.Default()
-
-	// Инициализация сессий
-	store := cookie.NewStore([]byte("secret"))
-	r.Use(sessions.Sessions("mysession", store))
 
 	// load static files
 	r.LoadHTMLGlob("./web/*.html")
