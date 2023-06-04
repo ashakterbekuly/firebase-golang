@@ -71,7 +71,7 @@ func DeleteClientImage(oldPhotoUrl string) error {
 }
 
 func CreateArchitectPhoto(file *multipart.FileHeader) (string, error) {
-	object := storageBucket.Object("architects-photos/" + file.Filename)
+	object := storageBucket.Object("architect-photos/" + file.Filename)
 
 	writer := object.NewWriter(context.TODO())
 	defer func() {
