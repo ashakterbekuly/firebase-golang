@@ -41,8 +41,8 @@ func main() {
 	r.GET("/register/role", auth.RegisterRoleGet)
 	r.GET("/register/arch", auth.RegisterArchitectGet)
 	r.POST("/register/arch", auth.RegisterArchitect)
-	r.GET("/register/clients", auth.RegisterClientGet)
-	r.POST("/register/clients", auth.RegisterClient)
+	r.GET("/register/client", auth.RegisterClientGet)
+	r.POST("/register/client", auth.RegisterClient)
 
 	//login routes
 	r.GET("/login", auth.LoginGet)
