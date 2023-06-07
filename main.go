@@ -1,9 +1,10 @@
 package main
 
 import (
-	"firebase-golang/api"
-	"firebase-golang/api/auth"
-	"firebase-golang/api/edit_profile"
+	apiV0 "firebase-golang/api/v0"
+	"firebase-golang/api/v0/auth"
+	"firebase-golang/api/v0/edit_profile"
+	apiV1 "firebase-golang/api/v1"
 	"firebase-golang/database"
 	"firebase-golang/firebase_auth"
 	"github.com/gin-gonic/gin"
@@ -13,7 +14,7 @@ import (
 
 func main() {
 
-	api.InitUserState()
+	apiV0.InitUserState()
 	database.InitFirebaseApp()
 
 	// initialize new gin engine (for server)
@@ -49,22 +50,22 @@ func main() {
 	r.POST("/login", auth.Login)
 
 	//main page
-	r.GET("/", api.MainPage)
+	r.GET("/", apiV0.MainPage)
 
 	//events page
-	r.GET("/events", api.EventsPage)
+	r.GET("/events", apiV0.EventsPage)
 
 	//architecture page
-	r.GET("/architecture", api.ArchitecturePage)
+	r.GET("/architecture", apiV0.ArchitecturePage)
 
 	//sign out
 	r.GET("/logout", auth.Logout)
 
 	//projects
-	r.GET("/projects", api.ProjectsGet)
+	r.GET("/projects", apiV0.ProjectsGet)
 
 	//profile
-	r.GET("/profile", api.Profile)
+	r.GET("/profile", apiV0.Profile)
 
 	//edit profile
 	r.POST("/edit-profile", edit_profile.EditClient)
@@ -73,7 +74,9 @@ func main() {
 	r.POST("/edit-architects", edit_profile.EditArchitectProfile)
 
 	//templates
-	r.GET("/templates", api.Template)
+	r.GET("/templates", apiV0.Template)
+
+	r.POST("/v1/login", apiV1.Login)
 
 	port := os.Getenv("PORT")
 	if port == "" {

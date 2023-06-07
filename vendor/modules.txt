@@ -64,10 +64,9 @@ github.com/bytedance/sonic/utf8
 # github.com/chenzhuoyu/base64x v0.0.0-20221115062448-fe3a3abad311
 ## explicit; go 1.15
 github.com/chenzhuoyu/base64x
-# github.com/gin-contrib/sessions v0.0.5
-## explicit; go 1.18
-github.com/gin-contrib/sessions
-github.com/gin-contrib/sessions/cookie
+# github.com/dgrijalva/jwt-go v3.2.0+incompatible
+## explicit
+github.com/dgrijalva/jwt-go
 # github.com/gin-contrib/sse v0.1.0
 ## explicit; go 1.12
 github.com/gin-contrib/sse
@@ -152,15 +151,6 @@ github.com/googleapis/gax-go/v2
 github.com/googleapis/gax-go/v2/apierror
 github.com/googleapis/gax-go/v2/apierror/internal/proto
 github.com/googleapis/gax-go/v2/internal
-# github.com/gorilla/context v1.1.1
-## explicit
-github.com/gorilla/context
-# github.com/gorilla/securecookie v1.1.1
-## explicit
-github.com/gorilla/securecookie
-# github.com/gorilla/sessions v1.2.1
-## explicit
-github.com/gorilla/sessions
 # github.com/json-iterator/go v1.1.12
 ## explicit; go 1.12
 github.com/json-iterator/go
