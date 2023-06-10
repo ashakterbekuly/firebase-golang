@@ -3,7 +3,6 @@ package api
 import (
 	"firebase-golang/database/events"
 	"firebase-golang/database/projects"
-	"firebase-golang/database/roles"
 	"firebase-golang/database/templates"
 	"firebase-golang/models"
 	"github.com/gin-gonic/gin"
@@ -42,25 +41,13 @@ func MainPage(c *gin.Context) {
 		showProjects = projectsList
 	}
 
-	authored := GetUserState()
-
 	res := map[string]interface{}{
-		"IsNonAuthenticated": !authored,
-		"Events":             sortEventsByDateFrom(eventsList),
-		"Projects":           showProjects,
-		"Templates":          templates.SortTemplates(templatesList),
+		"Events":    sortEventsByDateFrom(eventsList),
+		"Projects":  showProjects,
+		"Templates": templates.SortTemplates(templatesList),
 	}
 
-	if !authored {
-		c.HTML(http.StatusOK, "index.html", res)
-		return
-	}
-
-	uid := c.Query("uid")
-	res["ID"] = uid
-	res["Username"] = roles.GetUsernameByUID(uid)
-
-	c.HTML(http.StatusOK, "index.html", res)
+	c.JSON(http.StatusOK, res)
 }
 
 func sortEventsByDateFrom(events []models.Event) []models.Event {

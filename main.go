@@ -76,7 +76,11 @@ func main() {
 	//templates
 	r.GET("/templates", apiV0.Template)
 
-	r.POST("/v1/login", apiV1.Login)
+	v1 := r.Group("/v1")
+
+	v1.GET("/", apiV1.MainPage)
+
+	v1.POST("/login", apiV1.Login)
 
 	port := os.Getenv("PORT")
 	if port == "" {

@@ -10,6 +10,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 )
 
@@ -56,5 +57,8 @@ func Login(c *gin.Context) {
 
 	apiV0.SetUserState(true)
 
-	c.JSON(http.StatusOK, gin.H{"token": tokenString})
+	c.JSON(http.StatusOK, gin.H{
+		"token":    tokenString,
+		"username": strings.ToUpper(roles.GetUsernameByUID(claims["username"].(string))),
+	})
 }
