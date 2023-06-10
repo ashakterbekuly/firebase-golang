@@ -1,7 +1,6 @@
 package api
 
 import (
-	"firebase-golang/api/v0"
 	"firebase-golang/database"
 	"firebase-golang/database/architects"
 	"firebase-golang/database/roles"
@@ -13,13 +12,13 @@ import (
 )
 
 func EditArchitectProfile(c *gin.Context) {
-	uid := c.Query("uid")
+	uid := c.MustGet("ID").(string)
 	currentEmail := roles.GetEmailByUID(uid)
 
 	// Получаем данные из формы
 	currentPassword := c.PostForm("current-password")
 	if currentPassword == "" {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверный пароль"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "password field is empty"})
 		return
 	}
 	newEmail := c.PostForm("new-email")
@@ -44,7 +43,7 @@ func EditArchitectProfile(c *gin.Context) {
 		err := database.DeleteArchitectImage(architects.GetArchitectPhotoUrl(uid))
 		if err != nil {
 			log.Println(err)
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Ошибка удаления фото"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 			return
 		}
 		for _, file := range files {
@@ -55,7 +54,7 @@ func EditArchitectProfile(c *gin.Context) {
 	// Проверяем аутентификацию пользователя
 	token, err := firebase_auth.GetUserToken(currentEmail, currentPassword)
 	if err != nil {
-		c.JSON(http.StatusUnauthorized, gin.H{"error": "Неверный логин или пароль"})
+		c.JSON(http.StatusUnauthorized, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -82,8 +81,5 @@ func EditArchitectProfile(c *gin.Context) {
 		return
 	}
 
-	apiV0.SetUserState(true)
-
-	// Возвращаем сообщение об успешном обновлении учетной записи
-	c.Redirect(http.StatusFound, "/profile?uid="+uid)
+	c.JSON(http.StatusOK, gin.H{"message": "success"})
 }

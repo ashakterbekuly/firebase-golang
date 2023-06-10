@@ -83,9 +83,9 @@ func main() {
 
 	v1.POST("/login", apiV1.Login)
 
-	v1.POST("/register/arch", apiV1.RegisterArchitect)
+	v1.POST("/register-arch", apiV1.RegisterArchitect)
 
-	v1.POST("/register/client", apiV1.RegisterClient)
+	v1.POST("/register-client", apiV1.RegisterClient)
 
 	v1.GET("/events", apiV1.Events)
 
@@ -102,6 +102,10 @@ func main() {
 	v1.GET("/reconstructions", apiV1.Reconstructions)
 
 	v1.POST("/me", middleware.TokenCheck, apiV1.Profile)
+
+	v1.POST("/edit-arch", middleware.TokenCheck, apiV1.EditArchitectProfile)
+
+	v1.POST("/edit-client", middleware.TokenCheck, apiV1.EditClient)
 
 	port := os.Getenv("PORT")
 	if port == "" {
