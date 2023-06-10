@@ -42,16 +42,12 @@ func Login(c *gin.Context) {
 		return
 	}
 
-	// Генерация токена
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["username"] = roles.GetUIDByEmail(login.Email)
-	claims["exp"] = time.Now().Add(time.Hour * 1).Unix() // Время жизни токена
+	uid := roles.GetUIDByEmail(login.Email)
 
-	// Подпись токена
-	tokenString, err := token.SignedString([]byte(middleware.SignKey))
+	tokenString, err := GetToken(uid)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
 
@@ -59,6 +55,22 @@ func Login(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{
 		"token":    tokenString,
-		"username": strings.ToUpper(roles.GetUsernameByUID(claims["username"].(string))),
+		"username": strings.ToUpper(roles.GetUsernameByUID(uid)),
 	})
+}
+
+func GetToken(uid string) (string, error) {
+	// Генерация токена
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["username"] = uid
+	claims["exp"] = time.Now().Add(time.Hour * 1).Unix() // Время жизни токена
+
+	// Подпись токена
+	tokenString, err := token.SignedString([]byte(middleware.SignKey))
+	if err != nil {
+		return "", err
+	}
+
+	return tokenString, nil
 }

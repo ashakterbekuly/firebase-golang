@@ -2,6 +2,7 @@ package api
 
 import (
 	"context"
+	"errors"
 	"firebase-golang/api/v0"
 	"firebase-golang/database"
 	"firebase-golang/database/architects"
@@ -12,15 +13,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"strings"
 )
-
-func RegisterRoleGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "register_role.html", gin.H{})
-}
-
-func RegisterArchitectGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "register_arch.html", gin.H{})
-}
 
 func RegisterArchitect(c *gin.Context) {
 	firebaseAuth := c.MustGet("firebaseAuth").(*auth.Client)
@@ -44,8 +38,8 @@ func RegisterArchitect(c *gin.Context) {
 		}
 	}
 
-	if architect.Email == "" && architect.Password == "" {
-		c.AbortWithStatus(http.StatusBadRequest)
+	if architect.Email == "" || architect.Password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": errors.New("email or password is empty")})
 		return
 	}
 
@@ -59,20 +53,26 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
-	err = roles.SetRoleByEmail(dbUser.Email, "architects", uid)
+	err = roles.SetRoleByEmail(dbUser.Email, "architect", uid)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	tokenString, err := GetToken(uid)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	apiV0.SetUserState(true)
 
-	c.Redirect(http.StatusFound, "/uid="+uid)
-}
-
-func RegisterClientGet(c *gin.Context) {
-	c.HTML(http.StatusOK, "register_client.html", gin.H{})
+	c.JSON(http.StatusOK, gin.H{
+		"token":    tokenString,
+		"username": strings.ToUpper(roles.GetUsernameByUID(uid)),
+	})
 }
 
 func RegisterClient(c *gin.Context) {
@@ -97,8 +97,8 @@ func RegisterClient(c *gin.Context) {
 		}
 	}
 
-	if client.Email == "" && client.Password == "" {
-		c.AbortWithStatus(http.StatusBadRequest)
+	if client.Email == "" || client.Password == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": errors.New("email or password is empty")})
 		return
 	}
 
@@ -112,14 +112,24 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
-	err = roles.SetRoleByEmail(client.Email, "clients", uid)
+	err = roles.SetRoleByEmail(client.Email, "client", uid)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
+	tokenString, err := GetToken(uid)
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
 	apiV0.SetUserState(true)
 
-	c.Redirect(http.StatusFound, "/?uid="+uid)
+	c.JSON(http.StatusOK, gin.H{
+		"token":    tokenString,
+		"username": strings.ToUpper(roles.GetUsernameByUID(uid)),
+	})
 }

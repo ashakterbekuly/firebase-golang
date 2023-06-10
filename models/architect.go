@@ -3,12 +3,12 @@ package models
 import "time"
 
 type Architect struct {
-	Name           string `form:"name"`
-	Specialization string `form:"spec"`
-	Portfolio      string `form:"portfolio"`
-	Phone          string `form:"phone"`
-	Email          string `form:"email"`
-	Password       string `form:"password"`
+	Name           string `form:"name" json:"name"`
+	Specialization string `form:"spec" json:"spec"`
+	Portfolio      string `form:"portfolio" json:"portfolio"`
+	Phone          string `form:"phone" json:"phone"`
+	Email          string `form:"email" json:"email"`
+	Password       string `form:"password" json:"password"`
 	Bio            string
 	PhotoUrl       string
 }

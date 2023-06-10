@@ -82,6 +82,10 @@ func main() {
 
 	v1.POST("/login", apiV1.Login)
 
+	v1.POST("/register/arch", apiV1.RegisterArchitect)
+
+	v1.POST("/register/client", apiV1.RegisterClient)
+
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "5002"

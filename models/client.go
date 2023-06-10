@@ -7,11 +7,11 @@ import (
 
 type Client struct {
 	ID       string
-	Name     string `form:"name"`
-	Phone    string `form:"phone"`
-	Email    string `form:"email"`
-	Bio      string `form:"bio"`
-	Password string `form:"password"`
+	Name     string `form:"name" json:"name"`
+	Phone    string `form:"phone" json:"phone"`
+	Email    string `form:"email" json:"email"`
+	Bio      string `form:"bio" json:"bio"`
+	Password string `form:"password" json:"password"`
 	PhotoUrl string
 }
 
