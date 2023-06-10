@@ -10,6 +10,12 @@ import (
 	"strings"
 )
 
+const (
+	storageBucketName = "getjob-ef46d.appspot.com"
+	ArchitectPhotos   = "architect-photos/"
+	ClientPhotos      = "client-photos/"
+)
+
 var storageBucket *storage.BucketHandle
 
 func InitStorage() *storage.BucketHandle {
@@ -18,7 +24,7 @@ func InitStorage() *storage.BucketHandle {
 		log.Fatalf("firebaseApp.Storage: %v", err)
 	}
 
-	bucket, err := client.Bucket("getjob-ef46d.appspot.com")
+	bucket, err := client.Bucket(storageBucketName)
 	if err != nil {
 		log.Fatalf("firebaseApp.Storage: %v", err)
 	}
@@ -29,7 +35,7 @@ func InitStorage() *storage.BucketHandle {
 }
 
 func CreateClientPhoto(file *multipart.FileHeader) (string, error) {
-	object := storageBucket.Object("clients-photos/" + file.Filename)
+	object := storageBucket.Object(ClientPhotos + file.Filename)
 
 	writer := object.NewWriter(context.TODO())
 	defer func() {
@@ -59,7 +65,7 @@ func CreateClientPhoto(file *multipart.FileHeader) (string, error) {
 
 func DeleteClientImage(oldPhotoUrl string) error {
 	objectName := strings.Split(strings.Split(oldPhotoUrl, "%2F")[1], "?alt")[0]
-	obj := storageBucket.Object("clients-photos/" + objectName)
+	obj := storageBucket.Object(ClientPhotos + objectName)
 
 	// Удаляем файл из хранилища
 	err := obj.Delete(context.TODO())
@@ -71,7 +77,7 @@ func DeleteClientImage(oldPhotoUrl string) error {
 }
 
 func CreateArchitectPhoto(file *multipart.FileHeader) (string, error) {
-	object := storageBucket.Object("architect-photos/" + file.Filename)
+	object := storageBucket.Object(ArchitectPhotos + file.Filename)
 
 	writer := object.NewWriter(context.TODO())
 	defer func() {
@@ -101,7 +107,7 @@ func CreateArchitectPhoto(file *multipart.FileHeader) (string, error) {
 
 func DeleteArchitectImage(oldPhotoUrl string) error {
 	objectName := strings.Split(strings.Split(oldPhotoUrl, "%2F")[1], "?alt")[0]
-	obj := storageBucket.Object("architects-photos/" + objectName)
+	obj := storageBucket.Object(ArchitectPhotos + objectName)
 
 	// Удаляем файл из хранилища
 	err := obj.Delete(context.TODO())

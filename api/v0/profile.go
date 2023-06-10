@@ -13,7 +13,7 @@ func Profile(c *gin.Context) {
 	authored := GetUserState()
 	uid := c.Query("uid")
 
-	if roles.GetRoleByUID(uid) == "client" {
+	if roles.GetRoleByUID(uid) == roles.Client {
 		client, err := clients.GetClientByUID(uid)
 		if err != nil {
 			log.Println(err)

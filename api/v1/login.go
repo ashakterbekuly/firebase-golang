@@ -1,7 +1,6 @@
 package api
 
 import (
-	"errors"
 	apiV0 "firebase-golang/api/v0"
 	"firebase-golang/database/roles"
 	"firebase-golang/firebase_auth"
@@ -31,7 +30,7 @@ func Login(c *gin.Context) {
 
 	if login.Email == "" || login.Password == "" {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"error": errors.New("email or password is empty")})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "email or password is empty"})
 		return
 	}
 
@@ -63,7 +62,7 @@ func GetToken(uid string) (string, error) {
 	// Генерация токена
 	token := jwt.New(jwt.SigningMethodHS256)
 	claims := token.Claims.(jwt.MapClaims)
-	claims["username"] = uid
+	claims["uid"] = uid
 	claims["exp"] = time.Now().Add(time.Hour * 1).Unix() // Время жизни токена
 
 	// Подпись токена

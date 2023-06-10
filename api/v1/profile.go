@@ -10,10 +10,10 @@ import (
 )
 
 func Profile(c *gin.Context) {
-	authored := GetUserState()
-	uid := c.Query("uid")
+	uid := c.MustGet("ID").(string)
+	role := roles.GetRoleByUID(uid)
 
-	if roles.GetRoleByUID(uid) == "client" {
+	if role == roles.Client {
 		client, err := clients.GetClientByUID(uid)
 		if err != nil {
 			log.Println(err)
@@ -21,15 +21,13 @@ func Profile(c *gin.Context) {
 			return
 		}
 
-		c.HTML(http.StatusOK, "profile.html", gin.H{
-			"IsNonAuthenticated": !authored,
-			"ID":                 uid,
-			"Name":               client.Name,
-			"Bio":                client.Bio,
-			"PhotoUrl":           client.PhotoUrl,
-			"Username":           client.Name,
+		c.JSON(http.StatusOK, gin.H{
+			"Role":     roles.Client,
+			"Name":     client.Name,
+			"Bio":      client.Bio,
+			"PhotoUrl": client.PhotoUrl,
 		})
-	} else {
+	} else if role == roles.Architect {
 		architect, err := architects.GetArchitectByUID(uid)
 		if err != nil {
 			log.Println(err)
@@ -37,15 +35,16 @@ func Profile(c *gin.Context) {
 			return
 		}
 
-		c.HTML(http.StatusOK, "architecture.html", gin.H{
-			"IsNonAuthenticated": !authored,
-			"ID":                 uid,
-			"Name":               architect.Name,
-			"Bio":                architect.Bio,
-			"PhotoUrl":           architect.PhotoUrl,
-			"Specialization":     architect.Specialization,
-			"Portfolio":          architect.Portfolio,
-			"Username":           architect.Name,
+		c.JSON(http.StatusOK, gin.H{
+			"Role":           roles.Architect,
+			"Name":           architect.Name,
+			"Bio":            architect.Bio,
+			"PhotoUrl":       architect.PhotoUrl,
+			"Specialization": architect.Specialization,
+			"Portfolio":      architect.Portfolio,
 		})
+	} else {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "unknown role"})
+		return
 	}
 }

@@ -76,7 +76,7 @@ func EditArchitectProfile(c *gin.Context) {
 		Portfolio:      newPortfolio,
 	})
 
-	err = roles.UpdateRoleByEmail(currentEmail, newEmail, "architects")
+	err = roles.UpdateRoleByEmail(currentEmail, newEmail, roles.Architect)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

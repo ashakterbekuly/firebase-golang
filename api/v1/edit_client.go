@@ -72,7 +72,7 @@ func EditClient(c *gin.Context) {
 		PhotoUrl: newPhotoUrl,
 	})
 
-	err = roles.UpdateRoleByEmail(currentEmail, newEmail, "clients")
+	err = roles.UpdateRoleByEmail(currentEmail, newEmail, roles.Client)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return

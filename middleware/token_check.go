@@ -43,7 +43,7 @@ func TokenCheck(c *gin.Context) {
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		// Выполнение дополнительных действий при успешной валидации токена
 		// Например, сохранение идентификатора пользователя из токена в контексте запроса
-		c.Set("ID", claims["username"])
+		c.Set("ID", claims["uid"])
 	} else {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid token"})
 		c.Abort()

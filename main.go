@@ -7,6 +7,7 @@ import (
 	apiV1 "firebase-golang/api/v1"
 	"firebase-golang/database"
 	"firebase-golang/firebase_auth"
+	"firebase-golang/middleware"
 	"github.com/gin-gonic/gin"
 	"log"
 	"os"
@@ -99,6 +100,8 @@ func main() {
 	v1.GET("/urban-projects", apiV1.UrbanProjects)
 
 	v1.GET("/reconstructions", apiV1.Reconstructions)
+
+	v1.POST("/me", middleware.TokenCheck, apiV1.Profile)
 
 	port := os.Getenv("PORT")
 	if port == "" {

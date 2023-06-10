@@ -9,6 +9,11 @@ import (
 	"log"
 )
 
+const (
+	Architect = "architect"
+	Client    = "client"
+)
+
 type Role struct {
 	ID    string
 	Email string
@@ -79,7 +84,6 @@ func GetRoleByUID(uid string) string {
 	for _, doc := range docs {
 		rawID, ok := doc.Data()["ID"].(string)
 		if !ok {
-			log.Println(err)
 			continue
 		}
 
@@ -121,7 +125,7 @@ func GetUsernameByUID(uid string) string {
 	role := GetRoleByUID(uid)
 
 	var username string
-	if role == "client" {
+	if role == Client {
 		username = clients.GetUsernameByUID(uid)
 	} else {
 		username = architects.GetUsernameByUID(uid)

@@ -2,7 +2,6 @@ package api
 
 import (
 	"context"
-	"errors"
 	"firebase-golang/api/v0"
 	"firebase-golang/database"
 	"firebase-golang/database/architects"
@@ -39,7 +38,7 @@ func RegisterArchitect(c *gin.Context) {
 	}
 
 	if architect.Email == "" || architect.Password == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": errors.New("email or password is empty")})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "email or password is empty"})
 		return
 	}
 
@@ -53,7 +52,7 @@ func RegisterArchitect(c *gin.Context) {
 		return
 	}
 
-	err = roles.SetRoleByEmail(dbUser.Email, "architect", uid)
+	err = roles.SetRoleByEmail(dbUser.Email, roles.Architect, uid)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -98,7 +97,7 @@ func RegisterClient(c *gin.Context) {
 	}
 
 	if client.Email == "" || client.Password == "" {
-		c.JSON(http.StatusBadRequest, gin.H{"error": errors.New("email or password is empty")})
+		c.JSON(http.StatusBadRequest, gin.H{"error": "email or password is empty"})
 		return
 	}
 
@@ -112,7 +111,7 @@ func RegisterClient(c *gin.Context) {
 		return
 	}
 
-	err = roles.SetRoleByEmail(client.Email, "client", uid)
+	err = roles.SetRoleByEmail(client.Email, roles.Client, uid)
 	if err != nil {
 		log.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
