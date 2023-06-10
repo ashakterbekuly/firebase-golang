@@ -2,15 +2,12 @@ package api
 
 import (
 	"firebase-golang/database/projects"
-	"firebase-golang/database/roles"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
-func ProjectsGet(c *gin.Context) {
-	authored := GetUserState()
-
+func Projects(c *gin.Context) {
 	projectsList, err := projects.GetProjectsList()
 	if err != nil {
 		log.Println(err)
@@ -18,20 +15,7 @@ func ProjectsGet(c *gin.Context) {
 		return
 	}
 
-	res := map[string]interface{}{
-		"IsNonAuthenticated": !authored,
-		"Projects":           projectsList,
-	}
-
-	if !authored {
-		c.HTML(http.StatusOK, "projects.html", res)
-		return
-	}
-
-	uid := c.Query("uid")
-
-	res["ID"] = uid
-	res["Username"] = roles.GetUsernameByUID(uid)
-
-	c.HTML(http.StatusOK, "projects.html", res)
+	c.JSON(http.StatusOK, gin.H{
+		"Projects": projectsList,
+	})
 }

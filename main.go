@@ -78,13 +78,27 @@ func main() {
 
 	v1 := r.Group("/v1")
 
-	v1.GET("/", apiV1.MainPage)
+	v1.GET("/", apiV1.Main)
 
 	v1.POST("/login", apiV1.Login)
 
 	v1.POST("/register/arch", apiV1.RegisterArchitect)
 
 	v1.POST("/register/client", apiV1.RegisterClient)
+
+	v1.GET("/events", apiV1.Events)
+
+	v1.GET("/projects", apiV1.Projects)
+
+	v1.GET("/templates", apiV1.Templates)
+
+	v1.GET("/interior-designs", apiV1.InteriorDesigns)
+
+	v1.GET("/house-drafts", apiV1.HouseDrafts)
+
+	v1.GET("/urban-projects", apiV1.UrbanProjects)
+
+	v1.GET("/reconstructions", apiV1.Reconstructions)
 
 	port := os.Getenv("PORT")
 	if port == "" {

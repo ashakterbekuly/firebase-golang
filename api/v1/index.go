@@ -10,7 +10,7 @@ import (
 	"net/http"
 )
 
-func MainPage(c *gin.Context) {
+func Main(c *gin.Context) {
 	eventsList, err := events.GetEventsList()
 	if err != nil {
 		log.Println(err)

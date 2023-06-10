@@ -1,14 +1,13 @@
 package api
 
 import (
-	"firebase-golang/database/roles"
 	"firebase-golang/database/templates"
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
 )
 
-func Template(c *gin.Context) {
+func Templates(c *gin.Context) {
 	templatesList, err := templates.GetTemplatesList()
 	if err != nil {
 		log.Println(err)
@@ -16,32 +15,62 @@ func Template(c *gin.Context) {
 		return
 	}
 
-	authored := GetUserState()
+	c.JSON(http.StatusOK, gin.H{
+		"HouseDrafts":     templates.GetHouseDrafts(templatesList),
+		"InteriorDesigns": templates.GetInteriorDesigns(templatesList),
+		"UrbanProjects":   templates.GetUrbanProjects(templatesList),
+		"Reconstructions": templates.GetReconstructionProjects(templatesList),
+	})
+}
 
-	res := map[string]interface{}{
-		"IsNonAuthenticated": !authored,
+func HouseDrafts(c *gin.Context) {
+	templatesList, err := templates.GetTemplatesList()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
-	if authored {
-		uid := c.Query("uid")
-		res["ID"] = uid
-		res["Username"] = roles.GetUsernameByUID(uid)
+	c.JSON(http.StatusOK, gin.H{
+		"Templates": templates.GetHouseDrafts(templatesList),
+	})
+}
+
+func InteriorDesigns(c *gin.Context) {
+	templatesList, err := templates.GetTemplatesList()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
 
-	switch c.Query("spec") {
-	case "House Draft":
-		res["Templates"] = templates.GetHouseDrafts(templatesList)
-		c.HTML(http.StatusOK, "cottage_drafts.html", res)
-	case "Interior Design":
-		res["Templates"] = templates.GetInteriorDesigns(templatesList)
-		c.HTML(http.StatusOK, "interior_designs.html", res)
-	case "Urban Project":
-		res["Templates"] = templates.GetUrbanProjects(templatesList)
-		c.HTML(http.StatusOK, "urban_projects.html", res)
-	case "Reconstruction":
-		res["Templates"] = templates.GetReconstructionProjects(templatesList)
-		c.HTML(http.StatusOK, "restoration_projects.html", res)
-	default:
-		c.HTML(http.StatusOK, "index.html", res)
+	c.JSON(http.StatusOK, gin.H{
+		"Templates": templates.GetInteriorDesigns(templatesList),
+	})
+}
+
+func UrbanProjects(c *gin.Context) {
+	templatesList, err := templates.GetTemplatesList()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
 	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Templates": templates.GetUrbanProjects(templatesList),
+	})
+}
+
+func Reconstructions(c *gin.Context) {
+	templatesList, err := templates.GetTemplatesList()
+	if err != nil {
+		log.Println(err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"Templates": templates.GetReconstructionProjects(templatesList),
+	})
 }
