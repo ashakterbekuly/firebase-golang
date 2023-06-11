@@ -1,7 +1,7 @@
 package models
 
 type Template struct {
-	Title         string
-	Specification string
-	ImageUrl      string
+	Title         string `json:"title"`
+	Specification string `json:"specification"`
+	ImageUrl      string `json:"imageUrl"`
 }

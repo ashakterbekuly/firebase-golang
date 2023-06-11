@@ -16,6 +16,6 @@ func Projects(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"Projects": projectsList,
+		"projects": projectsList,
 	})
 }

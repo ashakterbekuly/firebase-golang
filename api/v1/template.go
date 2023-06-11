@@ -16,10 +16,10 @@ func Templates(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"HouseDrafts":     templates.GetHouseDrafts(templatesList),
-		"InteriorDesigns": templates.GetInteriorDesigns(templatesList),
-		"UrbanProjects":   templates.GetUrbanProjects(templatesList),
-		"Reconstructions": templates.GetReconstructionProjects(templatesList),
+		"houseDrafts":     templates.GetHouseDrafts(templatesList),
+		"interiorDesigns": templates.GetInteriorDesigns(templatesList),
+		"urbanProjects":   templates.GetUrbanProjects(templatesList),
+		"reconstructions": templates.GetReconstructionProjects(templatesList),
 	})
 }
 
@@ -32,7 +32,7 @@ func HouseDrafts(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"Templates": templates.GetHouseDrafts(templatesList),
+		"templates": templates.GetHouseDrafts(templatesList),
 	})
 }
 
@@ -45,7 +45,7 @@ func InteriorDesigns(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"Templates": templates.GetInteriorDesigns(templatesList),
+		"templates": templates.GetInteriorDesigns(templatesList),
 	})
 }
 
@@ -58,7 +58,7 @@ func UrbanProjects(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"Templates": templates.GetUrbanProjects(templatesList),
+		"templates": templates.GetUrbanProjects(templatesList),
 	})
 }
 
@@ -71,6 +71,6 @@ func Reconstructions(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"Templates": templates.GetReconstructionProjects(templatesList),
+		"templates": templates.GetReconstructionProjects(templatesList),
 	})
 }

@@ -22,10 +22,10 @@ func Profile(c *gin.Context) {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"Role":     roles.Client,
-			"Name":     client.Name,
-			"Bio":      client.Bio,
-			"PhotoUrl": client.PhotoUrl,
+			"role":     roles.Client,
+			"name":     client.Name,
+			"bio":      client.Bio,
+			"photoUrl": client.PhotoUrl,
 		})
 	} else if role == roles.Architect {
 		architect, err := architects.GetArchitectByUID(uid)
@@ -36,12 +36,12 @@ func Profile(c *gin.Context) {
 		}
 
 		c.JSON(http.StatusOK, gin.H{
-			"Role":           roles.Architect,
-			"Name":           architect.Name,
-			"Bio":            architect.Bio,
-			"PhotoUrl":       architect.PhotoUrl,
-			"Specialization": architect.Specialization,
-			"Portfolio":      architect.Portfolio,
+			"role":           roles.Architect,
+			"name":           architect.Name,
+			"bio":            architect.Bio,
+			"photoUrl":       architect.PhotoUrl,
+			"specialization": architect.Specialization,
+			"portfolio":      architect.Portfolio,
 		})
 	} else {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "unknown role"})

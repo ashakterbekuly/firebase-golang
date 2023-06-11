@@ -42,9 +42,9 @@ func Main(c *gin.Context) {
 	}
 
 	res := map[string]interface{}{
-		"Events":    sortEventsByDateFrom(eventsList),
-		"Projects":  showProjects,
-		"Templates": templates.SortTemplates(templatesList),
+		"events":    sortEventsByDateFrom(eventsList),
+		"projects":  showProjects,
+		"templates": templates.SortTemplates(templatesList),
 	}
 
 	c.JSON(http.StatusOK, res)

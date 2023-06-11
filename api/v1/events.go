@@ -16,6 +16,6 @@ func Events(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, gin.H{
-		"Events": eventsList,
+		"events": eventsList,
 	})
 }

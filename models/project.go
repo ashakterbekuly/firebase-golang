@@ -1,9 +1,9 @@
 package models
 
 type Project struct {
-	Name            string
-	Author          string
-	Description     string
-	ProjectImageUrl string
-	AuthorImageUrl  string
+	Name            string `json:"name"`
+	Author          string `json:"author"`
+	Description     string `json:"description"`
+	ProjectImageUrl string `json:"projectImageUrl"`
+	AuthorImageUrl  string `json:"authorImageUrl"`
 }
