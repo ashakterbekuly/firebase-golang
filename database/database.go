@@ -19,7 +19,7 @@ var conf = &firebase.Config{
 }
 
 func InitFirebaseApp() {
-	serviceAccountKeyFilePath, err := filepath.Abs("./serviceAccountKey.json")
+	serviceAccountKeyFilePath, err := filepath.Abs("./config/conf.json")
 	if err != nil {
 		panic("Unable to load serviceAccountKeys.json file")
 	}
