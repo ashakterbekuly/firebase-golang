@@ -33,7 +33,7 @@ func main() {
 	firebaseAuth := firebase_auth.SetupFirebaseAuth()
 
 	//set db and auth instance
-	r.Use(func(c *gin.Context) {
+	r.Use(middleware.CorsMiddleware(), func(c *gin.Context) {
 		c.Set("db", db)
 		c.Set("storage", storage)
 		c.Set("firebaseAuth", firebaseAuth)
