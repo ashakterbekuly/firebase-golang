@@ -103,7 +103,7 @@ func main() {
 
 	v1.POST("/me", middleware.TokenCheck, apiV1.Profile)
 
-	v1.GET("/architect", apiV1.Profile)
+	v1.GET("/architect", apiV1.Architect)
 
 	v1.POST("/edit-arch", middleware.TokenCheck, apiV1.EditArchitectProfile)
 
