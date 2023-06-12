@@ -3,6 +3,7 @@ package templates
 import (
 	"context"
 	"firebase-golang/database"
+	"firebase-golang/database/architects"
 	"firebase-golang/models"
 )
 
@@ -21,7 +22,35 @@ func GetTemplatesList() ([]models.Template, error) {
 		if err != nil {
 			return nil, err
 		}
+
+		template.AuthorName = architects.GetUsernameByUID(template.AuthorID)
+
 		templates = append(templates, template)
+	}
+
+	return templates, nil
+}
+
+func GetTemplatesByAuthorID(authorID, authorName string) ([]models.Template, error) {
+	var templates []models.Template
+	coll := database.Firestore.Collection("templates")
+
+	documents, err := coll.Documents(context.TODO()).GetAll()
+	if err != nil {
+		return nil, err
+	}
+
+	for _, document := range documents {
+		var template models.Template
+		err = document.DataTo(&template)
+		if err != nil {
+			return nil, err
+		}
+
+		if template.AuthorID == authorID {
+			template.AuthorName = authorName
+			templates = append(templates, template)
+		}
 	}
 
 	return templates, nil
